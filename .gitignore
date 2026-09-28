@@ -1,0 +1,23 @@
+# Docs-only publication allowlist. Review new files before changing this.
+/*
+!/LICENSES/
+/LICENSES/*
+!/docs/
+/docs/*
+!/scripts/
+/scripts/*
+!/.gitignore
+!/LICENSES/Hermes-Agent-MIT.txt
+!/README.md
+!/audit-report.json
+!/docs/ARCHITECTURE.md
+!/docs/BUILD.md
+!/docs/INSTALL.md
+!/docs/LIMITATIONS.md
+!/docs/PROVENANCE.md
+!/docs/PUBLICATION.md
+!/docs/SECURITY.md
+!/docs/SERVER.md
+!/publication-manifest.json
+!/release-metadata.json
+!/scripts/verify_public_bundle.py

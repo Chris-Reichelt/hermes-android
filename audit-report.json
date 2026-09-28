@@ -1,0 +1,53 @@
+{
+  "scope": "sanitized documentation staging plus preliminary read-only candidate source/APK inspection",
+  "candidate_source_scan": {
+    "files": 3229,
+    "bytes": 28335582,
+    "matched_file_counts": {
+      "known_private_identity": 220,
+      "private_ipv4": 23,
+      "personal_home_path": 95,
+      "credential_url": 5,
+      "tailnet_hostname": 8
+    },
+    "matches_are_not_all_secrets": true,
+    "source_included": false
+  },
+  "candidate_apk_scan": {
+    "release": "0.3.4",
+    "sha256": "2c0e33523c97e4324d368d0ee076d597a2d3f9d7b95b259d88f811d20f7bec76",
+    "zip_members_scanned": 1098,
+    "uncompressed_bytes": 47785964,
+    "matched_member_counts": {
+      "known_private_identity": 18,
+      "tailnet_hostname": 1,
+      "private_ipv4": 1,
+      "key_or_token": 1,
+      "credential_url": 1
+    },
+    "confirmed_credentials_or_operational_endpoints_identified": false,
+    "private_recording_included": false,
+    "binary_visual_or_license_clearance_complete": false,
+    "apk_included": false
+  },
+  "excluded_categories": [
+    "source snapshot",
+    "APKs",
+    "private recordings",
+    "screenshots and UI dumps",
+    "logs and internal handoffs",
+    "signing keys",
+    "credential/config/profile/session data",
+    "dependency/toolchain/emulator caches",
+    "Git history and account metadata"
+  ],
+  "limitations": [
+    "heuristic text/ZIP-string scan, not a proof of no encoded secrets or all PII",
+    "candidate source findings need file-by-file review",
+    "private source fixture dependencies must be replaced",
+    "third-party binary assets and licenses not fully audited",
+    "new documentation license not assigned",
+    "no GitHub write performed"
+  ],
+  "public_bundle_verification": "Run scripts/verify_public_bundle.py against publication-manifest.json; validation output is not a license or APK clearance."
+}

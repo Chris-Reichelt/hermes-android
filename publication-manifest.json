@@ -1,0 +1,98 @@
+{
+  "scope": "documentation-only",
+  "application_source_included": false,
+  "apk_included": false,
+  "manifest_self_hash": "Not self-hashed; every other payload file is hashed below.",
+  "include": [
+    {
+      "path": ".gitignore",
+      "bytes": 460,
+      "sha256": "4c622df522993f0a144580b192a7b2d246f5cfe4f1b0b6e676542307f65e7c01"
+    },
+    {
+      "path": "LICENSES/Hermes-Agent-MIT.txt",
+      "bytes": 1070,
+      "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4220,
+      "sha256": "0e1f548f945a143ff7453179bc6ca64d1e8cdf00139366472aded900d622fb56"
+    },
+    {
+      "path": "audit-report.json",
+      "bytes": 1857,
+      "sha256": "988c12b50410a002714f5b1e794782cf5ca42bbc7f180a502d298bdb0f4f1f70"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 7561,
+      "sha256": "85c6e4321cfdf160cc547b2ea318dcf462269b02023d550f7b0bfea71cfe10c5"
+    },
+    {
+      "path": "docs/BUILD.md",
+      "bytes": 7128,
+      "sha256": "91a5e8f6499be938e450aa769828943428b3d366900745d2ef5a8fa4440c5774"
+    },
+    {
+      "path": "docs/INSTALL.md",
+      "bytes": 7203,
+      "sha256": "d1f6254996539b6ca35fbf441c5000e07a39952efaca4fc67380ea09a0923042"
+    },
+    {
+      "path": "docs/LIMITATIONS.md",
+      "bytes": 5559,
+      "sha256": "49be1931af8059f9ff1529632a2048d81574c55c8f0ca293e7127c4ba55775c4"
+    },
+    {
+      "path": "docs/PROVENANCE.md",
+      "bytes": 5674,
+      "sha256": "c9713c61da917d9938ea768c1bb37413bd6ac38e17b358df3523a3881d3424c2"
+    },
+    {
+      "path": "docs/PUBLICATION.md",
+      "bytes": 7270,
+      "sha256": "fc42ce4f2484b3d011bc99be29f07970526da91fe39e505e4b7abe86f691df7f"
+    },
+    {
+      "path": "docs/SECURITY.md",
+      "bytes": 4444,
+      "sha256": "c9f6b9e7c33e773008dded6a25bb02771f1adfdc39b384be82fedc8a7782e23a"
+    },
+    {
+      "path": "docs/SERVER.md",
+      "bytes": 4775,
+      "sha256": "7cbb173af92cfe63d058def3871a43adda28f4a0956fd24e897a82ea7acaa338"
+    },
+    {
+      "path": "release-metadata.json",
+      "bytes": 1755,
+      "sha256": "6077893591f0149f1b903dda6b177edc7e3b025e9397050d140e71fcb06bcb98"
+    },
+    {
+      "path": "scripts/verify_public_bundle.py",
+      "bytes": 2625,
+      "sha256": "34dbbb88d4eb23a9c90de304c253313a72b17a88bed54063921329e015c5d998"
+    }
+  ],
+  "exclude": [
+    "app source and tests",
+    "APK/binary release assets",
+    "private audio fixtures",
+    "internal handoffs and raw evidence",
+    "screenshots and logs",
+    "secrets/config/profile/session data",
+    "signing keys and keystores",
+    "node_modules and toolchain caches",
+    "existing Git history and account identity"
+  ],
+  "source_release_blockers": [
+    "freeze downstream source provenance",
+    "portable dependency lock/workspace and build inputs",
+    "replace private fixture paths and audio",
+    "review candidate source PII/network matches",
+    "upstream/downstream/dependency/asset licensing",
+    "release signing and hardening"
+  ],
+  "publication_requires": "Owner review and secure GitHub operation by parent/maintainer; no upload performed here."
+}

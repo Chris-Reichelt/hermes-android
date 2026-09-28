@@ -2,7 +2,7 @@
 
 This project documents an Android client that packages the Hermes Desktop React interface inside a native Android WebView shell. The phone is a client: agents, models, tools, profiles, history and server files live on an independently operated Hermes backend. It is not an on-phone model runtime, the web dashboard in a browser tab, or a promise of complete desktop parity.
 
-**Publication scope: documentation only.** This review bundle contains no application source, APK, credentials, recording, screenshot or operational configuration. Source and binary publication remain gated by the work in [Publication](docs/PUBLICATION.md). No GitHub upload is implied by this bundle. This is a downstream preview, not a claim of an official Nous Research Android release.
+**Experimental APK now available:** [Download the public preview](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.4-public-preview). Read the release notes before installing: this separately signed debug preview installs alongside the original private app and requires your own compatible backend over Tailscale. The source export is still being finalized. The documentation below describes the original private build unless stated otherwise; its package ID, signing identity and APK checksum are NOT those of the public preview. The release page is authoritative for the downloadable APK. This is not an official Nous Research Android release.
 
 ## Release described
 

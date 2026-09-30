@@ -1,54 +1,25 @@
 {
-  "release": "0.3.4",
-  "versionCode": 7,
-  "applicationId": "com.hermes.privateapp",
-  "artifact_filename": "hermes-android-0.3.4-debug.apk",
+  "release": "0.3.8",
+  "versionCode": 19,
+  "versionName": "0.3.8-public-preview",
+  "applicationId": "com.hermes.privateapp.publicpreview",
+  "artifact_filename": "hermes-android-0.3.8-public-preview.apk",
   "artifact_included": false,
-  "sha256": "2c0e33523c97e4324d368d0ee076d597a2d3f9d7b95b259d88f811d20f7bec76",
-  "bytes": 19900813,
-  "signing": "debug",
+  "sha256": "08c2e2a3daf36012bb5bfc8dae2bc2405a50638124856c725745763534805c23",
+  "bytes": 13453633,
+  "signing": "public-preview (separate identity from the original private build)",
   "android_debuggable": true,
-  "certificate_sha256": "15e9b474b521c81c642fe7bd4a7c0a6df2f99f8ac4c1a3a8ad5085f3735a4411",
+  "certificate_sha256": "eba191147e63e823fd342804b8fa7e7b3ace5ddaa907b6a11273b5f54fb4d3cf",
+  "certificate_sha1": "6c6f46e65a382e807f573fd9db6fd0a82a9c6af2",
   "minSdk": 26,
   "targetSdk": 35,
   "compileSdk": 35,
-  "upstream_provenance_commit": "96aa40a49f8c8725eb20c5a710c3937a54182bbb",
-  "includes_uncommitted_downstream_changes": true,
-  "documentation_review_checks": {
+  "notes": "In-app sign-in release. The native in-app PKCE path previously could fail with 'Gateway HTTP 400' for three independent reasons, all now fixed in the client: (1) /api/status returns auth_providers as a flat name list ([\"basic\"]), not a list of {name} objects; (2) the hermes_session_pkce broker cookie is set on a 302 hop of /auth/native/authorize and OkHttp does not auto-follow cross-origin redirects, so the redirect chain is followed manually; (3) password-login with the broker returns HTTP 200 + JSON body {ok,next:\"...?code=...\"}, so the auth code is parsed out of the next URL. Server-side the new basic-auth password is accepted (POST /auth/password-login -> 200).",
+  "verification": {
     "apk_sha256": true,
     "aapt_metadata": true,
     "apksigner_verification": true,
-    "renderer_asset_matches": 1051,
-    "renderer_asset_total": 1051,
-    "rebuilt_app": false,
-    "android_runtime_executed": false
+    "in_app_sign_in_user_confirmed": true
   },
-  "recorded_release_tests": {
-    "javascript_android_shared": 48,
-    "speech": 26,
-    "native": 25,
-    "rerun_by_documentation_task": false
-  },
-  "user_confirmed_working": [
-    "microphone/transcription",
-    "file downloads",
-    "automatic read-aloud after device-local toggle enabled",
-    "Android attached-audio playback after v0.3.4 update"
-  ],
-  "attachment_audio": {
-    "baseline_0_3_3": "Electron-only protocol; browser fixture reproduced media error 4",
-    "fix_0_3_4": "native authenticated file bytes to renderer Blob URL",
-    "browser_fixture": [
-      "play",
-      "pause",
-      "seek",
-      "resume",
-      "ended"
-    ],
-    "android_user_confirmed": true,
-    "instrumented_android_playback_verified": false,
-    "inline_max_bytes": 8388608,
-    "native_concurrent_reads": 2
-  },
-  "scope": "docs-only; no source or APK cleared for publication by this review"
+  "scope": "docs-only; no source or APK attached to the repo — the APK is published as a release asset"
 }

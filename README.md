@@ -35,5 +35,6 @@ This project documents an Android client that packages the Hermes Desktop React 
 | 0.3.2 | Wired Android Read Responses Aloud to the existing local preference; repaired native socket error delivery and speech failure cleanup; added bounded metadata diagnostics. |
 | 0.3.3 | Authenticated file/image download bridge and Android destination picker. |
 | 0.3.4 | Authenticated attachment-media read, bounded byte transfer and Blob-backed playback; no change to automatic-speech policy. |
+| 0.3.8 | **In-app sign-in** (type credentials directly in the app, no external browser). Fixes the `Gateway HTTP 400` that the old in-app path could hit: it now (a) reads `auth_providers` as a flat name list, (b) follows the `/auth/native/authorize` redirect chain to capture the `hermes_session_pkce` broker cookie (OkHttp does not auto-follow cross-origin 302s), and (c) extracts the auth `code` from the `next` URL in the `password-login` JSON body. Shipped as the `com.hermes.privateapp.publicpreview` public preview, versionCode 19. |
 
 Historical fixture success is not device validation. Reports about earlier versions are not treated as proof that every feature works on every Android/WebView combination.

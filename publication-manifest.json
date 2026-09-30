@@ -16,8 +16,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4220,
-      "sha256": "0e1f548f945a143ff7453179bc6ca64d1e8cdf00139366472aded900d622fb56"
+      "bytes": 5221,
+      "sha256": "c67bc50285bb4c9ea1c7cabff1191a3dbe32423e1452c2ee5928924cab5e8df8"
     },
     {
       "path": "audit-report.json",
@@ -66,8 +66,8 @@
     },
     {
       "path": "release-metadata.json",
-      "bytes": 1755,
-      "sha256": "6077893591f0149f1b903dda6b177edc7e3b025e9397050d140e71fcb06bcb98"
+      "bytes": 1621,
+      "sha256": "ecbd040038d4c92cc948a3241653e7c5af9458ba8e664066a5d4228d76dfa5e3"
     },
     {
       "path": "scripts/verify_public_bundle.py",

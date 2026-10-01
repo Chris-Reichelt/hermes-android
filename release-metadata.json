@@ -1,12 +1,12 @@
 {
-  "release": "0.3.8",
-  "versionCode": 19,
-  "versionName": "0.3.8-public-preview",
+  "release": "0.3.12",
+  "versionCode": 23,
+  "versionName": "0.3.12-pushfix19-public-preview",
   "applicationId": "com.hermes.privateapp.publicpreview",
-  "artifact_filename": "hermes-android-0.3.8-public-preview.apk",
+  "artifact_filename": "hermes-android-v0.3.12-pushfix19.apk",
   "artifact_included": false,
-  "sha256": "08c2e2a3daf36012bb5bfc8dae2bc2405a50638124856c725745763534805c23",
-  "bytes": 13453633,
+  "sha256": "45c262973c63e9e724cdd1a2e5ef3286d34bd491baa77526dce95ee549200fb9",
+  "bytes": 13517580,
   "signing": "public-preview (separate identity from the original private build)",
   "android_debuggable": true,
   "certificate_sha256": "eba191147e63e823fd342804b8fa7e7b3ace5ddaa907b6a11273b5f54fb4d3cf",
@@ -14,12 +14,20 @@
   "minSdk": 26,
   "targetSdk": 35,
   "compileSdk": 35,
-  "notes": "In-app sign-in release. The native in-app PKCE path previously could fail with 'Gateway HTTP 400' for three independent reasons, all now fixed in the client: (1) /api/status returns auth_providers as a flat name list ([\"basic\"]), not a list of {name} objects; (2) the hermes_session_pkce broker cookie is set on a 302 hop of /auth/native/authorize and OkHttp does not auto-follow cross-origin redirects, so the redirect chain is followed manually; (3) password-login with the broker returns HTTP 200 + JSON body {ok,next:\"...?code=...\"}, so the auth code is parsed out of the next URL. Server-side the new basic-auth password is accepted (POST /auth/password-login -> 200).",
+  "notes": "pushfix19: separate high-importance reply notification channel, WebSocket reconnect and shared-auth lifecycle repairs, green debug button removed. Same public-preview signing identity; supports in-place upgrade. Compatible same-endpoint /api/push backend required. Foreground-service WebSocket delivery, not FCM or offline replay.",
   "verification": {
     "apk_sha256": true,
     "aapt_metadata": true,
     "apksigner_verification": true,
-    "in_app_sign_in_user_confirmed": true
+    "signer_matches_previous_public_preview": true,
+    "native_android_notification_scenarios_passed": 6,
+    "baseline_reconnect_failure_reproduced": true,
+    "renderer_unchanged_except_debug_button_script": true,
+    "physical_device_notifications_verified": false,
+    "existing_native_tests_passed": 49,
+    "existing_auth_dependent_tests_skipped": 16,
+    "existing_media_fixture_failures": 4,
+    "full_lint_clean": false
   },
   "scope": "docs-only; no source or APK attached to the repo — the APK is published as a release asset"
 }

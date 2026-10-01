@@ -16,8 +16,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5066,
-      "sha256": "e272fc94c680ca11a914205d30408d1afe59b65abf2bb8d0e5a6451262b62fa1"
+      "bytes": 6478,
+      "sha256": "68e36862ad5fe8cbedc2000faccdbc82a7c96dd8c695182b3562a027e598d8b2"
     },
     {
       "path": "audit-report.json",
@@ -36,13 +36,13 @@
     },
     {
       "path": "docs/INSTALL.md",
-      "bytes": 7203,
-      "sha256": "d1f6254996539b6ca35fbf441c5000e07a39952efaca4fc67380ea09a0923042"
+      "bytes": 7847,
+      "sha256": "29702802abc05c694a7dc1c7ac93a55df09690b58431ffc8986ba47a5a89d4d2"
     },
     {
       "path": "docs/LIMITATIONS.md",
-      "bytes": 5559,
-      "sha256": "49be1931af8059f9ff1529632a2048d81574c55c8f0ca293e7127c4ba55775c4"
+      "bytes": 6707,
+      "sha256": "f7bc1457a2403d7bbd2869fbb23b77452a9c7cb74caec00be9ca4ed82c6b1533"
     },
     {
       "path": "docs/PROVENANCE.md",
@@ -66,8 +66,8 @@
     },
     {
       "path": "release-metadata.json",
-      "bytes": 1621,
-      "sha256": "ecbd040038d4c92cc948a3241653e7c5af9458ba8e664066a5d4228d76dfa5e3"
+      "bytes": 1671,
+      "sha256": "decac4fce2a39718fd6585dc877367de646e44de17daeb30fde52747e2ae61d8"
     },
     {
       "path": "scripts/verify_public_bundle.py",

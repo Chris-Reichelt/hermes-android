@@ -2,11 +2,22 @@
 
 This project documents an Android client that packages the Hermes Desktop React interface inside a native Android WebView shell. The phone is a client: agents, models, tools, profiles, history and server files live on an independently operated Hermes backend. It is not an on-phone model runtime, the web dashboard in a browser tab, or a promise of complete desktop parity.
 
-**Experimental APK now available:** [Download the public preview](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.8-public-preview). Read the release notes before installing: this separately signed debug preview (package `com.hermes.privateapp.publicpreview`, versionCode 19) installs alongside the original private app and requires your own compatible backend over Tailscale. The 0.3.8 release adds **in-app sign-in** (type your credentials directly in the app) and fixes the in-app `Gateway HTTP 400`. The release page is authoritative for the downloadable APK and the `SHA256SUMS`/`verification.json` that go with it. This is not an official Nous Research Android release.
+**Latest APK:** [Download 0.3.12 / pushfix19](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.12-public-preview). This debug preview (package `com.hermes.privateapp.publicpreview`, versionCode 23) updates the existing public-preview app in place with the same signing identity. It requires your own compatible Hermes backend over Tailscale. This is not an official Nous Research Android release.
 
-## Release described
+## What's new: 0.3.12 / pushfix19
 
-**v0.3.4 / versionCode 7**, package `com.hermes.privateapp`, minimum Android 8 (API 26), target/compile API 35. The inspected APK is **debug-signed and debuggable**, not a production-hardened store release. Its verified identity is in [release metadata](release-metadata.json); the APK itself is intentionally not attached.
+- Fixed background listener reconnects, including reconnecting after the app screen closes: the running service retains its in-memory authentication until disconnect or final cleanup.
+- Reply notifications now use a separate high-importance channel; the persistent listener notification remains quiet. Foreground replies remain suppressed.
+- Removed the green Push Log debug button and credential/reply-body logging.
+- Kept the existing renderer assets unchanged except for removal of the debug-button script.
+
+The original pushfix18 failed native reconnect checks and used a default-importance reply channel. This build passes all six native Android emulator scenarios: foreground suppression, background reply, streamed-text fallback, server-close reconnect, return-to-foreground suppression, and reconnect/notification after Activity destruction. Physical-device notification settings and manufacturer restrictions still apply.
+
+Install the APK over the current public preview (no uninstall), reopen and sign in, allow notifications, then send a message and press Home before its reply. Verify downloads with the release's `SHA256SUMS` and `verification.json`. Background delivery requires a compatible authenticated `/api/push` endpoint on the same server as chat. This is a foreground-service WebSocket listener, not FCM: force-stop, process death, network loss and Android background-service time limits can interrupt delivery; there is no offline replay guarantee.
+
+## Historical architecture baseline (0.3.4)
+
+The following historical baseline describes **v0.3.4 / versionCode 7**, package `com.hermes.privateapp`. Current release identity is in [release metadata](release-metadata.json). Both require minimum Android 8 (API 26), target/compile API 35, and are **debuggable previews**, not production-hardened store releases.
 
 - Phone navigation exposes Sessions, New chat and Settings around the reused desktop renderer.
 - Browser sign-in uses the gateway's native PKCE broker. Native code owns credentials and authenticated REST/WebSocket transport.
@@ -28,6 +39,7 @@ This project documents an Android client that packages the Hermes Desktop React 
 
 | Version | Change relevant to users/developers |
 | --- | --- |
+| 0.3.12 / pushfix19 | Background notification channel, socket reconnect and shared-auth lifecycle repairs; green debug button removed. Public-preview versionCode 23. |
 | 0.1.x | Initial native shell and reused desktop renderer. |
 | 0.2.0 | System-browser native sign-in, bearer refresh and fresh WebSocket tickets. |
 | 0.3.0 | Phone navigation, responsive settings access, keyboard-height/layout adaptations. |

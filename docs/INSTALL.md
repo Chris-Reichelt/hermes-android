@@ -2,36 +2,38 @@
 
 ## Before installation
 
-This documentation bundle does not distribute an APK. Obtain a release only from a publisher you trust and only after its source/licensing and security review. The inspected artifact is a private-preview **debug build**, not Play Store production software.
+Download the current APK from the [0.3.12 public-preview release](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.12-public-preview). This is a **debuggable preview**, not Play Store production software. The repository itself contains documentation; APKs are release assets.
 
 Requirements: Android 8/API 26 or later, a maintained compatible Android System WebView with `WEB_MESSAGE_LISTENER`, an enabled system browser, your own compatible Hermes server, network permission to reach it, and valid server login. Connect Tailscale on the phone and server first. A `.ts.net` suffix alone neither provisions a VPN nor authenticates a server. The app accepts `.ts.net` names or addresses in the Tailscale `100.64.0.0/10` range; ordinary LAN names, localhost and arbitrary public hosts are not accepted by this preview.
 
 ## Check the file
 
-For the exact v0.3.4 artifact described here:
+For the current 0.3.12 / pushfix19 artifact:
 
 ```text
-Filename: hermes-android-0.3.4-debug.apk
-SHA-256: 2c0e33523c97e4324d368d0ee076d597a2d3f9d7b95b259d88f811d20f7bec76
-Package: com.hermes.privateapp
-Version: 0.3.4 (7)
+Filename: hermes-android-v0.3.12-pushfix19.apk
+SHA-256: 45c262973c63e9e724cdd1a2e5ef3286d34bd491baa77526dce95ee549200fb9
+Package: com.hermes.privateapp.publicpreview
+Version: 0.3.12-pushfix19-public-preview (23)
 ```
 
 On Windows PowerShell:
 
 ```powershell
-Get-FileHash .\hermes-android-0.3.4-debug.apk -Algorithm SHA256
+Get-FileHash .\hermes-android-v0.3.12-pushfix19.apk -Algorithm SHA256
 ```
 
 On Linux:
 
 ```sh
-sha256sum hermes-android-0.3.4-debug.apk
+sha256sum hermes-android-v0.3.12-pushfix19.apk
 ```
 
 Compare the result to an independently trusted publisher checksum. Matching a checksum detects a different file; it is not a security audit or proof of publisher identity.
 
 ## Install or update
+
+The current APK uses the same public-preview signing identity as 0.3.8 and pushfix18; update in place without uninstalling. After updating, reopen and sign in. Allow notifications, send a message, then press Home before its reply. Check Android's **Hermes replies** notification channel if banners are disabled. The background listener requires a compatible `/api/push` endpoint on the same authenticated server as chat; installing the APK does not install that server endpoint. Explicit Disconnect and Android Force Stop stop background delivery.
 
 1. Transfer the approved APK to the phone without making a public link to private server files.
 2. Open it in the phone's file manager. If prompted, allow **Install unknown apps** for that specific source, not indiscriminately for every app.

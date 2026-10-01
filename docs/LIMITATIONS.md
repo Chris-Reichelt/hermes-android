@@ -1,5 +1,13 @@
 # Feature status and evidence
 
+## Current notification release: 0.3.12 / pushfix19
+
+Native foreground/background, streamed-text fallback, socket reconnect, foreground return, and Activity-destroyed reconnect/notification scenarios pass on an Android emulator. The old build's reconnect failures were reproduced. Reply alerts use a high-importance channel separate from the quiet listener channel; the green Push Log button is removed. Existing non-notification tests produced 49 passes and 16 auth-dependent skips; four additional media tests could not run successfully because an existing audio fixture was missing. Existing lint also reports an unrelated API-level guard error; this is not a claim of a clean full test/lint suite.
+
+This is authenticated WebSocket delivery via a foreground service, not FCM or offline queued delivery. Your server must provide compatible `/api/push` reply events. Android notification permission, channel preferences, Do Not Disturb, process death, force-stop, connectivity and foreground dataSync service time limits affect delivery. Physical-device and manufacturer behavior is not certified by emulator tests.
+
+## Historical 0.3.4 baseline
+
 Status applies to the documented **v0.3.4** artifact. “Implemented” means present in inspected code; “fixture verified” means an isolated test, not the same thing as Android hardware or a live account. User reports below are narrow observations, not a multi-device qualification matrix.
 
 | Feature | Status / evidence | Remaining boundary |

@@ -2,18 +2,17 @@
 
 This project documents an Android client that packages the Hermes Desktop React interface inside a native Android WebView shell. The phone is a client: agents, models, tools, profiles, history and server files live on an independently operated Hermes backend. It is not an on-phone model runtime, the web dashboard in a browser tab, or a promise of complete desktop parity.
 
-**Latest APK:** [Download 0.3.12 / pushfix19](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.12-public-preview). This debug preview (package `com.hermes.privateapp.publicpreview`, versionCode 23) updates the existing public-preview app in place with the same signing identity. It requires your own compatible Hermes backend over Tailscale. This is not an official Nous Research Android release.
+**Latest APK:** [Download 0.3.13 / newchatfix21](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.13-public-preview). This debug preview (package `com.hermes.privateapp.publicpreview`, versionCode 25) updates the existing public-preview app in place with the same signing identity. It requires your own compatible Hermes backend over Tailscale. This is not an official Nous Research Android release.
 
-## What's new: 0.3.12 / pushfix19
+## What's new: 0.3.13 / newchatfix21
 
-- Fixed background listener reconnects, including reconnecting after the app screen closes: the running service retains its in-memory authentication until disconnect or final cleanup.
-- Reply notifications now use a separate high-importance channel; the persistent listener notification remains quiet. Foreground replies remain suppressed.
-- Removed the green Push Log debug button and credential/reply-body logging.
-- Kept the existing renderer assets unchanged except for removal of the debug-button script.
+- New Chat keeps the selected bot instead of switching to the shared gateway's default bot.
+- The action uses the open chat's connection-qualified owner; pressing New Chat repeatedly keeps the draft owner.
+- Existing conversations and notification fixes from 0.3.12 are preserved. No backend restart or history reset is needed.
 
-The original pushfix18 failed native reconnect checks and used a default-importance reply channel. This build passes all six native Android emulator scenarios: foreground suppression, background reply, streamed-text fallback, server-close reconnect, return-to-foreground suppression, and reconnect/notification after Activity destruction. Physical-device notification settings and manufacturer restrictions still apply.
+The prior fix20 still switched a selected bot to the default on a multiplexed gateway. This was reproduced with the original packaged renderer against an authenticated real gateway. The final APK's renderer passed opening an existing bot conversation, pressing New Chat twice, and sending a diagnostic: both session creation and prompt submission stayed on the selected profile, with the expected reply and no renderer errors. Default and another bot also passed navigation checks. The user subsequently reported success. This is separate from instrumented physical-device testing; none was performed for this change.
 
-Install the APK over the current public preview (no uninstall), reopen and sign in, allow notifications, then send a message and press Home before its reply. Verify downloads with the release's `SHA256SUMS` and `verification.json`. Background delivery requires a compatible authenticated `/api/push` endpoint on the same server as chat. This is a foreground-service WebSocket listener, not FCM: force-stop, process death, network loss and Android background-service time limits can interrupt delivery; there is no offline replay guarantee.
+Install over the current public preview (do not uninstall). Verify the release's `SHA256SUMS` and `verification.json`. Only one renderer asset changed from fix20; native code and signing identity are unchanged. Background notifications still require a compatible authenticated `/api/push` endpoint on the same server as chat. Delivery is a foreground-service WebSocket listener, not FCM or guaranteed offline replay.
 
 ## Historical architecture baseline (0.3.4)
 
@@ -39,6 +38,7 @@ The following historical baseline describes **v0.3.4 / versionCode 7**, package 
 
 | Version | Change relevant to users/developers |
 | --- | --- |
+| 0.3.13 / newchatfix21 | New Chat follows the focused bot owner on shared gateways and preserves repeated drafts. Public-preview versionCode 25. |
 | 0.3.12 / pushfix19 | Background notification channel, socket reconnect and shared-auth lifecycle repairs; green debug button removed. Public-preview versionCode 23. |
 | 0.1.x | Initial native shell and reused desktop renderer. |
 | 0.2.0 | System-browser native sign-in, bearer refresh and fresh WebSocket tickets. |

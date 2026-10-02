@@ -2,31 +2,31 @@
 
 ## Before installation
 
-Download the current APK from the [0.3.12 public-preview release](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.12-public-preview). This is a **debuggable preview**, not Play Store production software. The repository itself contains documentation; APKs are release assets.
+Download the current APK from the [0.3.13 public-preview release](https://github.com/Chris-Reichelt/hermes-android/releases/tag/v0.3.13-public-preview). This is a **debuggable preview**, not Play Store production software. The repository itself contains documentation; APKs are release assets.
 
 Requirements: Android 8/API 26 or later, a maintained compatible Android System WebView with `WEB_MESSAGE_LISTENER`, an enabled system browser, your own compatible Hermes server, network permission to reach it, and valid server login. Connect Tailscale on the phone and server first. A `.ts.net` suffix alone neither provisions a VPN nor authenticates a server. The app accepts `.ts.net` names or addresses in the Tailscale `100.64.0.0/10` range; ordinary LAN names, localhost and arbitrary public hosts are not accepted by this preview.
 
 ## Check the file
 
-For the current 0.3.12 / pushfix19 artifact:
+For the current 0.3.13 / newchatfix21 artifact:
 
 ```text
-Filename: hermes-android-v0.3.12-pushfix19.apk
-SHA-256: 45c262973c63e9e724cdd1a2e5ef3286d34bd491baa77526dce95ee549200fb9
+Filename: hermes-android-v0.3.13-newchatfix21.apk
+SHA-256: ad497452cf92903664ec6f766633b8407fa47a88ffb1ad26ed5107ceb0dd812c
 Package: com.hermes.privateapp.publicpreview
-Version: 0.3.12-pushfix19-public-preview (23)
+Version: 0.3.13-newchatfix21-public-preview (25)
 ```
 
 On Windows PowerShell:
 
 ```powershell
-Get-FileHash .\hermes-android-v0.3.12-pushfix19.apk -Algorithm SHA256
+Get-FileHash .\hermes-android-v0.3.13-newchatfix21.apk -Algorithm SHA256
 ```
 
 On Linux:
 
 ```sh
-sha256sum hermes-android-v0.3.12-pushfix19.apk
+sha256sum hermes-android-v0.3.13-newchatfix21.apk
 ```
 
 Compare the result to an independently trusted publisher checksum. Matching a checksum detects a different file; it is not a security audit or proof of publisher identity.

@@ -1,5 +1,9 @@
 # Feature status and evidence
 
+## New Chat release: 0.3.13 / newchatfix21
+
+New Chat now uses the focused chat owner rather than the shared socket's launch profile. Live authenticated gateway checks passed existing-chat resume, repeated New Chat, explicit profile ownership for create/send and the expected diagnostic reply. Default and a second bot passed navigation checks. The user reported success after delivery. No instrumented physical-device test was performed for this renderer-only change; the native notification evidence below is historical and was not rerun.
+
 ## Current notification release: 0.3.12 / pushfix19
 
 Native foreground/background, streamed-text fallback, socket reconnect, foreground return, and Activity-destroyed reconnect/notification scenarios pass on an Android emulator. The old build's reconnect failures were reproduced. Reply alerts use a high-importance channel separate from the quiet listener channel; the green Push Log button is removed. Existing non-notification tests produced 49 passes and 16 auth-dependent skips; four additional media tests could not run successfully because an existing audio fixture was missing. Existing lint also reports an unrelated API-level guard error; this is not a claim of a clean full test/lint suite.

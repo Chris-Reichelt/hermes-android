@@ -9560,7 +9560,7 @@
     ]
   },
   "index.html": {
-    "file": "assets/index-C44VrH4n.js",
+    "file": "assets/index-DIfG_b9g.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -9571,7 +9571,7 @@
       "src/main.tsx"
     ],
     "css": [
-      "assets/index-CpdfJXK7.css"
+      "assets/index-gy241zvA.css"
     ]
   },
   "src/app/agents/index.tsx": {
@@ -10151,7 +10151,7 @@
     ]
   },
   "src/main.tsx": {
-    "file": "assets/main-CyZ4bu7H.js",
+    "file": "assets/main-Bu32LSYL.js",
     "name": "main",
     "src": "src/main.tsx",
     "isDynamicEntry": true,

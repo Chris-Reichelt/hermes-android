@@ -5,7 +5,10 @@ html[data-android], [data-android] body, [data-android] #root { min-width: 0 !im
 .phone-nav { display: flex; flex: 0 0 auto; gap: 8px; padding: 6px 10px; border-bottom: 1px solid var(--ui-stroke-secondary); }
 .phone-nav button { min-height: 44px; flex: 1; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; font-size: 15px; font-weight: 600; }
 .phone-nav button[aria-expanded=true] { background: var(--ui-row-active-background); }
-.phone-connection { font-size: 12px; padding: 4px 12px; color: var(--ui-text-secondary); flex-shrink: 0; }
+.phone-connection { font-size: 11px; padding: 2px 12px; color: var(--ui-text-secondary); flex-shrink: 0; }
+.phone-read-aloud { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-height: 44px; flex: 0 0 auto; padding: 0 12px; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; font-size: 12px; font-weight: 600; }
+.phone-read-aloud-state { border: 1px solid; border-radius: 4px; padding: 0 5px; font-size: 10px; line-height: 12px; }
+.phone-read-aloud[aria-checked=true] .phone-read-aloud-state { background: var(--ui-text-primary); color: var(--ui-chat-surface-background); }
 .phone-audio-diagnostics { font-size: 12px; padding: 0 12px; flex-shrink: 0; max-height: 160px; overflow: auto; overflow-wrap: anywhere; }
 .phone-audio-diagnostics summary { min-height: 32px; cursor: pointer; }
 .phone-chat, .phone-sessions { flex: 1; min-height: 0; overflow: hidden; position: relative; }

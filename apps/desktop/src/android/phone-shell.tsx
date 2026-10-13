@@ -36,7 +36,7 @@ export function PhoneShell() {
       <button onClick={() => { setSessions(false); window.dispatchEvent(new Event('hermes:phone-new')) }}>New chat</button>
       <button onClick={() => { setSessions(false); navigate('/settings') }}>Settings</button>
     </nav>
-    <div className="phone-connection" role="status">{profile} · {gateway === 'open' ? 'Connected' : 'Reconnecting…'}{loading ? ' · Loading history…' : error ? ' · History unavailable — open Sessions to retry' : ''}</div>
+    {gateway !== 'open' || loading || error ? <div className="phone-connection" role="status">{gateway === 'open' ? 'Connected' : 'Reconnecting…'}{loading ? ' · Loading history…' : error ? ' · History unavailable — open Sessions to retry' : ''}</div> : null}
     <button type="button" className="phone-read-aloud" role="switch" aria-label="Read aloud" aria-checked={readAloud} title="Read new replies aloud on this device" onClick={() => setAutoSpeakReplies(!readAloud)}>
       <span>Read aloud</span>
       <span className="phone-read-aloud-state" aria-hidden="true">{readAloud ? 'ON' : 'OFF'}</span>

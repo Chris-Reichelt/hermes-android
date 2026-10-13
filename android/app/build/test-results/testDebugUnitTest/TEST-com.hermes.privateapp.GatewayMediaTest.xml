@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.hermes.privateapp.GatewayMediaTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-01T18:08:45" hostname="ncc1701e" time="0.017">
+  <properties/>
+  <testcase name="boundsLengthAndEmpty" classname="com.hermes.privateapp.GatewayMediaTest" time="0.003"/>
+  <testcase name="rejectsWrongOwnerAndStaleGeneration" classname="com.hermes.privateapp.GatewayMediaTest" time="0.002"/>
+  <testcase name="rejectsRedirectAndMissing" classname="com.hermes.privateapp.GatewayMediaTest" time="0.003"/>
+  <testcase name="exactClipBytesAndOwnerContract" classname="com.hermes.privateapp.GatewayMediaTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

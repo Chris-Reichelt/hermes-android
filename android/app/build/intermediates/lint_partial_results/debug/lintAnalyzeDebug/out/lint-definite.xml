@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.9.1" type="incidents">
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/GatewayDownload.java"
+            line="57"
+            column="43"
+            startOffset="3847"
+            endLine="57"
+            endColumn="54"
+            endOffset="3858"/>
+    </incident>
+
+    <incident
+        id="RequiresFeature"
+        severity="warning"
+        message="`addWebMessageListener` should only be called if the feature `WEB_MESSAGE_LISTENER` is present; to check call `androidx.webkit.WebViewFeature#isFeatureSupported`">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="175"
+            column="3"
+            startOffset="13416"
+            endLine="185"
+            endColumn="5"
+            endOffset="14074"/>
+    </incident>
+
+    <incident
+        id="RequiresFeature"
+        severity="warning"
+        message="`postMessage` should only be called if the feature `WEB_MESSAGE_LISTENER` is present; to check call `androidx.webkit.WebViewFeature#isFeatureSupported`">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="191"
+            column="78"
+            startOffset="14411"
+            endLine="191"
+            endColumn="115"
+            endOffset="14448"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.webkit:webkit than 1.12.1 is available: 1.17.1">
+        <fix-replace
+            description="Change to 1.17.1"
+            family="Update versions"
+            oldString="1.12.1"
+            replacement="1.17.1"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle"
+            line="16"
+            column="17"
+            startOffset="683"
+            endLine="16"
+            endColumn="48"
+            endOffset="714"/>
+    </incident>
+
+    <incident
+        id="SetJavaScriptEnabled"
+        severity="warning"
+        message="Using `setJavaScriptEnabled` can introduce XSS vulnerabilities into your application, review carefully">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="156"
+            column="43"
+            startOffset="11741"
+            endLine="156"
+            endColumn="78"
+            endOffset="11776"/>
+    </incident>
+
+    <incident
+        id="ObsoleteSdkInt"
+        severity="warning"
+        message="Unnecessary; `SDK_INT` is always >= 26">
+        <fix-data conditional="true"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="241"
+            column="9"
+            startOffset="19512"
+            endLine="241"
+            endColumn="45"
+            endOffset="19548"/>
+    </incident>
+
+    <incident
+        id="ObsoleteSdkInt"
+        severity="warning"
+        message="Unnecessary; `SDK_INT` is always >= 26">
+        <fix-data conditional="true"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="422"
+            column="7"
+            startOffset="32232"
+            endLine="422"
+            endColumn="45"
+            endOffset="32270"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="71"
+            column="38"
+            startOffset="3502"
+            endLine="71"
+            endColumn="158"
+            endOffset="3622"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="108"
+            column="52"
+            startOffset="7739"
+            endLine="108"
+            endColumn="71"
+            endOffset="7758"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="109"
+            column="49"
+            startOffset="7831"
+            endLine="109"
+            endColumn="65"
+            endOffset="7847"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="111"
+            column="123"
+            startOffset="8184"
+            endLine="111"
+            endColumn="205"
+            endOffset="8266"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="117"
+            column="63"
+            startOffset="8553"
+            endLine="117"
+            endColumn="146"
+            endOffset="8636"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="118"
+            column="89"
+            startOffset="8735"
+            endLine="118"
+            endColumn="142"
+            endOffset="8788"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="120"
+            column="67"
+            startOffset="8943"
+            endLine="120"
+            endColumn="141"
+            endOffset="9017"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="136"
+            column="181"
+            startOffset="10167"
+            endLine="136"
+            endColumn="247"
+            endOffset="10233"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="143"
+            column="50"
+            startOffset="10514"
+            endLine="143"
+            endColumn="78"
+            endOffset="10542"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="144"
+            column="182"
+            startOffset="10726"
+            endLine="144"
+            endColumn="230"
+            endOffset="10774"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="147"
+            column="239"
+            startOffset="11053"
+            endLine="147"
+            endColumn="275"
+            endOffset="11089"/>
+    </incident>
+
+    <incident
+        id="SetTextI18n"
+        severity="warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/hermes/privateapp/MainActivity.java"
+            line="149"
+            column="41"
+            startOffset="11167"
+            endLine="149"
+            endColumn="176"
+            endOffset="11302"/>
+    </incident>
+
+</incidents>

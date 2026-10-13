@@ -1,0 +1,9 @@
+node_modules/
+toolchain/
+*.apk
+artifacts/
+pub38/android/app/build/
+pub38/android/build/
+apps/desktop/dist/
+apps/desktop/node_modules/
+*.log

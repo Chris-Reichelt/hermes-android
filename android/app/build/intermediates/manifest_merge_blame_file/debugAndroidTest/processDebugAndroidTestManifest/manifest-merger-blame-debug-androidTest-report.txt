@@ -1,0 +1,46 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.hermes.privateapp.test" >
+4
+5    <uses-sdk
+5-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:5:5-7:41
+6        android:minSdkVersion="26"
+6-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:6:9-35
+7        android:targetSdkVersion="35" />
+7-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:7:9-38
+8
+9    <instrumentation
+9-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:9:5-14:57
+10        android:name="com.hermes.privateapp.ClipboardInstrumentation"
+10-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:10:9-70
+11        android:functionalTest="false"
+11-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:11:9-39
+12        android:handleProfiling="false"
+12-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:12:9-40
+13        android:label="Tests for com.hermes.privateapp"
+13-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:13:9-56
+14        android:targetPackage="com.hermes.privateapp" />
+14-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:14:9-54
+15    <instrumentation
+15-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:9:5-14:57
+16        android:name="com.hermes.privateapp.DownloadInstrumentation"
+16-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:10:9-70
+17        android:targetPackage="com.hermes.privateapp" />
+17-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:14:9-54
+18    <instrumentation
+18-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:9:5-14:57
+19        android:name="com.hermes.privateapp.ClipboardInstrumentation"
+19-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:10:9-70
+20        android:targetPackage="com.hermes.privateapp" />
+20-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:14:9-54
+21
+22    <application
+22-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:22:5-24:19
+23        android:debuggable="true"
+24        android:extractNativeLibs="false" >
+25        <uses-library android:name="android.test.runner" />
+25-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:23:9-60
+25-->/home/will/hermes-android/android/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile2ProcessTestManifest17504990000201915831.xml:23:23-57
+26    </application>
+27
+28</manifest>

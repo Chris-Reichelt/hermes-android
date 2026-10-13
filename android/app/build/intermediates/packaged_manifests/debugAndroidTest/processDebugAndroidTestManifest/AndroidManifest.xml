@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hermes.privateapp.test" >
+
+    <uses-sdk
+        android:minSdkVersion="26"
+        android:targetSdkVersion="35" />
+
+    <instrumentation
+        android:name="com.hermes.privateapp.ClipboardInstrumentation"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for com.hermes.privateapp"
+        android:targetPackage="com.hermes.privateapp" />
+    <instrumentation
+        android:name="com.hermes.privateapp.DownloadInstrumentation"
+        android:targetPackage="com.hermes.privateapp" />
+    <instrumentation
+        android:name="com.hermes.privateapp.ClipboardInstrumentation"
+        android:targetPackage="com.hermes.privateapp" />
+
+    <application
+        android:debuggable="true"
+        android:extractNativeLibs="false" >
+        <uses-library android:name="android.test.runner" />
+    </application>
+
+</manifest>

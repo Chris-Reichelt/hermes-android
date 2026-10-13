@@ -1,0 +1,7 @@
+#Mon Sep 28 21:49:50 UTC 2026
+base.0=/home/will/hermes-android/android/app/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/0/classes.dex
+base.1=/home/will/hermes-android/android/app/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/10/classes.dex
+path.0=0/classes.dex
+path.1=10/classes.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex

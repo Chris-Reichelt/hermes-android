@@ -1,0 +1,192 @@
+/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:9: Warning: WRITE_EXTERNAL_STORAGE is deprecated (and is not granted) when targeting Android 13+. If you need to write to shared storage, use the MediaStore.createWriteRequest intent. [ScopedStorage]
+ <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:10: Warning: READ_EXTERNAL_STORAGE is deprecated (and is not granted) when targeting Android 13+. If you need to query or interact with MediaStore or media files on the shared storage, you should instead use one or more new storage permissions: READ_MEDIA_IMAGES, READ_MEDIA_VIDEO or READ_MEDIA_AUDIO. [ScopedStorage]
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ScopedStorage":
+   Scoped storage is enforced on Android 10+ (or Android 11+ if using
+   requestLegacyExternalStorage). In particular, WRITE_EXTERNAL_STORAGE will
+   no longer provide write access to all files; it will provide the equivalent
+   of READ_EXTERNAL_STORAGE instead.
+
+   As of Android 13, if you need to query or interact with MediaStore or media
+   files on the shared storage, you should be using instead one or more new
+   storage permissions:
+   * android.permission.READ_MEDIA_IMAGES
+   * android.permission.READ_MEDIA_VIDEO
+   * android.permission.READ_MEDIA_AUDIO
+
+   and then add maxSdkVersion="33" to the older permission. See the developer
+   guide for how to do this:
+   https://developer.android.com/about/versions/13/behavior-changes-13#granula
+   r-media-permissions
+
+   The MANAGE_EXTERNAL_STORAGE permission can be used to manage all files, but
+   it is rarely necessary and most apps on Google Play are not allowed to use
+   it. Most apps should instead migrate to use scoped storage. To modify or
+   delete files, apps should request write access from the user as described
+   at https://goo.gle/android-mediastore-createwriterequest.
+
+   To learn more, read these resources: Play policy:
+   https://goo.gle/policy-storage-help Allowable use cases:
+   https://goo.gle/policy-storage-usecases
+
+   https://goo.gle/android-storage-usecases
+
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/GatewayDownload.java:57: Warning: Implicitly using the default locale is a common source of bugs: Use toLowerCase(Locale) instead. For strings meant to be internal use Locale.ROOT, otherwise Locale.getDefault(). [DefaultLocale]
+   if(image&&!r.header("Content-Type","").toLowerCase().startsWith("image/"))throw new IOException("Not an image");
+                                          ~~~~~~~~~~~
+
+   Explanation for issues of type "DefaultLocale":
+   Calling String#toLowerCase() or #toUpperCase() without specifying an
+   explicit locale is a common source of bugs. The reason for that is that
+   those methods will use the current locale on the user's device, and even
+   though the code appears to work correctly when you are developing the app,
+   it will fail in some locales. For example, in the Turkish locale, the
+   uppercase replacement for i is not I.
+
+   If you want the methods to just perform ASCII replacement, for example to
+   convert an enum name, call String#toUpperCase(Locale.ROOT) instead. If you
+   really want to use the current locale, call
+   String#toUpperCase(Locale.getDefault()) instead.
+
+   https://developer.android.com/reference/java/util/Locale.html#default_locale
+
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:175: Warning: addWebMessageListener should only be called if the feature WEB_MESSAGE_LISTENER is present; to check call androidx.webkit.WebViewFeature#isFeatureSupported [RequiresFeature]
+  WebViewCompat.addWebMessageListener(web,"HermesNative",Collections.singleton(ORIGIN),(view,message,origin,mainFrame,proxy) -> {
+  ^
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:191: Warning: postMessage should only be called if the feature WEB_MESSAGE_LISTENER is present; to check call androidx.webkit.WebViewFeature#isFeatureSupported [RequiresFeature]
+ private void post(JSONObject message) {runOnUiThread(() -> {if(reply!=null) reply.postMessage(message.toString());});}
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RequiresFeature":
+   Some APIs require optional features to be present. This check makes sure
+   that calls to these APIs are surrounded by a check which enforces this.
+
+/home/will/hermes-android/android/app/build.gradle:16: Warning: A newer version of androidx.webkit:webkit than 1.12.1 is available: 1.17.1 [GradleDependency]
+ implementation 'androidx.webkit:webkit:1.12.1'
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:156: Warning: Using setJavaScriptEnabled can introduce XSS vulnerabilities into your application, review carefully [SetJavaScriptEnabled]
+  WebSettings settings=web.getSettings(); settings.setJavaScriptEnabled(true); settings.setDomStorageEnabled(true); settings.setAllowFileAccess(false); settings.setAllowContentAccess(false); settings.setMediaPlaybackRequiresUserGesture(true); settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SetJavaScriptEnabled":
+   Your code should not invoke setJavaScriptEnabled if you are not sure that
+   your app really requires JavaScript support.
+
+   https://goo.gle/SetJavaScriptEnabled
+   https://developer.android.com/training/articles/security-tips
+
+/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11: Warning: The attribute android:allowBackup is deprecated from Android 12 and higher and may be removed in future versions. Consider adding the attribute android:dataExtractionRules specifying an @xml resource which configures cloud backups and device transfers on Android 12 and higher. [DataExtractionRules]
+  <application android:label="Hermes Android (Dev Preview)" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:allowBackup="false" android:usesCleartextTraffic="true" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+                                                                                                                                                            ~~~~~
+
+   Explanation for issues of type "DataExtractionRules":
+   Before Android 12, the attributes android:allowBackup and
+   android:fullBackupContent were used to configure all forms of backup,
+   including cloud backups, device-to-device transfers and adb backup.
+
+   In Android 12 and higher, these attributes have been deprecated and will
+   only apply to cloud backups. You should instead use the attribute
+   android:dataExtractionRules, specifying an @xml resource that configures
+   which files to back up, for cloud backups and for device-to-device
+   transfers, separately. If your minSdkVersion supports older versions,
+   you'll still want to specify an android:fullBackupContent resource if the
+   default behavior is not right for your app.
+
+   https://developer.android.com/about/versions/12/backup-restore#xml-changes
+   https://goo.gle/DataExtractionRules
+
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:241: Warning: Unnecessary; SDK_INT is always >= 26 [ObsoleteSdkInt]
+     if(android.os.Build.VERSION.SDK_INT>=26)startForegroundService(i);else startService(i);
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:422: Warning: Unnecessary; SDK_INT is always >= 26 [ObsoleteSdkInt]
+  if (android.os.Build.VERSION.SDK_INT >= 26) startForegroundService(i);
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ObsoleteSdkInt":
+   This check flags version checks that are not necessary, because the
+   minSdkVersion (or surrounding known API level) is already at least as high
+   as the version checked for.
+
+   Similarly, it also looks for resources in -vNN folders, such as values-v14
+   where the version qualifier is less than or equal to the minSdkVersion,
+   where the contents should be merged into the best folder.
+
+/home/will/hermes-android/android/app/src/main/res/mipmap-hdpi/ic_launcher_legacy.png: Warning: The resource R.mipmap.ic_launcher_legacy appears to be unused [UnusedResources]
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:71: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+  if(state!=null)setupStatus.setText("Session was cleared when Android recreated the app. Your gateway and profile are remembered; tap Sign in to reconnect.");
+                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:108: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+  Button connect=new Button(this); connect.setText("Sign in / Connect"); box.addView(connect);
+                                                   ~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:109: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+  Button cancel=new Button(this);cancel.setText("Cancel sign-in");cancel.setVisibility(View.GONE);box.addView(cancel);
+                                                ~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:111: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+  cancel.setOnClickListener(v->{signIn.invalidate();if(auth!=null)auth.cancel();auth=null;showSetup();setupStatus.setText("Sign-in canceled. Your gateway and profile are remembered. Tap Sign in to retry.");});
+                                                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:117: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+    if(tokenMode&&secret.getText().length()==0){error.setText("Enter a gateway token only for a legacy ungated server, or select in-app sign-in.");return;}
+                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:118: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+    if(inApp&&(user.getText().length()==0||secret.getText().length()==0)){error.setText("Enter your username and password, then tap Sign in.");return;}
+                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:120: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+    if(!connectionPreferences.save(endpoint,owner)){error.setText("Could not save the gateway and profile on this device. Please try again.");return;}
+                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:136: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        pendingBrowser=()->{try{startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(authorize)));}catch(Exception e){signIn.invalidate();attempt.cancel();auth=null;error.setText("No browser available. Install or enable a browser and try again.");restoreControls.run();}};
+                                                                                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:143: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+       signIn.complete(generation);error.setText("Signed in. Opening Hermes…");
+                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:144: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+       pendingEntry=()->{try{openRenderer();}catch(Exception e){signIn.invalidate();attempt.cancel();auth=null;if(web!=null){web.destroy();web=null;}showSetup();setupStatus.setText("Update Android System WebView, then try again.");}};
+                                                                                                                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:147: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+     } catch(Exception e) {final String detail=attempt.signInDiagnostic(e);attempt.cancel();runOnUiThread(()->{if(signIn.active(generation)&&auth==attempt){signIn.invalidate();pendingBrowser=null;pendingEntry=null;auth=null;error.setText(GatewayAuth.safeError(e)+"\n"+detail);restoreControls.run();}});}
+                                                                                                                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/will/hermes-android/android/app/src/main/java/com/hermes/privateapp/MainActivity.java:149: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+   } catch(Exception e) { error.setText("Enter a valid Tailscale gateway URL without credentials, query or fragment, and a profile name without slashes or control characters."); }
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SetTextI18n":
+   When calling TextView#setText
+   * Never call Number#toString() to format numbers; it will not handle
+   fraction separators and locale-specific digits properly. Consider using
+   String#format with proper format specifications (%d or %f) instead.
+   * Do not pass a string literal (e.g. "Hello") to display text. Hardcoded
+   text can not be properly translated to other languages. Consider using
+   Android resource strings instead.
+   * Do not build messages by concatenating text chunks. Such messages can not
+   be properly translated.
+
+   https://developer.android.com/guide/topics/resources/localization.html
+
+0 errors, 23 warnings

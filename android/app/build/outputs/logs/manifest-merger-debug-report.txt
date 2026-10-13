@@ -1,0 +1,143 @@
+-- Merging decision tree log ---
+data
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:188-265
+	android:host
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:240-263
+	android:scheme
+		INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:194-239
+manifest
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:1:1-19:12
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:1:1-19:12
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:1:1-19:12
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:1:1-19:12
+MERGED from [androidx.webkit:webkit:1.12.1] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/bca26b026ae2eee548f1ef42c5375ab9/transformed/webkit-1.12.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/12388d32ff154de644b2df4a3cb5ad96/transformed/core-1.1.0/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/ede02a27188e30128c4e6e8452cf3ac9/transformed/versionedparcelable-1.1.0/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/7880efad619dc72d569f5e6e2c17444b/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/d7331cfc52deae4583f878031781e6fb/transformed/lifecycle-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+	package
+		INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:2:2-64
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:2:19-61
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:3:2-68
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:3:19-65
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:4:2-74
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:4:19-71
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:5:2-74
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:5:19-71
+uses-permission#android.permission.FOREGROUND_SERVICE_DATA_SYNC
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:6:2-84
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:6:19-81
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:8:2-77
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:8:19-74
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:9:2-77
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:9:19-75
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:10:3-77
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:10:20-75
+application
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:3-18:16
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:3-18:16
+MERGED from [androidx.core:core:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/12388d32ff154de644b2df4a3cb5ad96/transformed/core-1.1.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/12388d32ff154de644b2df4a3cb5ad96/transformed/core-1.1.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/ede02a27188e30128c4e6e8452cf3ac9/transformed/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/ede02a27188e30128c4e6e8452cf3ac9/transformed/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+	android:extractNativeLibs
+		INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/12388d32ff154de644b2df4a3cb5ad96/transformed/core-1.1.0/AndroidManifest.xml:24:18-86
+	android:label
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:16-60
+	android:roundIcon
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:96-135
+	android:icon
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:61-95
+	android:allowBackup
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:136-163
+	android:theme
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:200-263
+	android:usesCleartextTraffic
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:164-199
+activity#com.hermes.privateapp.MainActivity
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:3-16:14
+	android:launchMode
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:42-73
+	android:windowSoftInputMode
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:160-202
+	android:exported
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:74-97
+	android:configChanges
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:98-159
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:4-145
+action#android.intent.action.MAIN
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:19-70
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:27-68
+category#android.intent.category.LAUNCHER
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:70-129
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:80-127
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:complete+data:scheme:com.hermes.privateapp.publicpreview.auth-return
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:4-281
+action#android.intent.action.VIEW
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:19-70
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:27-68
+category#android.intent.category.DEFAULT
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:70-128
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:80-126
+category#android.intent.category.BROWSABLE
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:128-188
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:138-186
+service#com.hermes.privateapp.PushService
+ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:3-108
+	android:exported
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:81-105
+	android:foregroundServiceType
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:40-80
+	android:name
+		ADDED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:12-39
+uses-sdk
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+MERGED from [androidx.webkit:webkit:1.12.1] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/bca26b026ae2eee548f1ef42c5375ab9/transformed/webkit-1.12.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.12.1] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/bca26b026ae2eee548f1ef42c5375ab9/transformed/webkit-1.12.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/12388d32ff154de644b2df4a3cb5ad96/transformed/core-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/12388d32ff154de644b2df4a3cb5ad96/transformed/core-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/ede02a27188e30128c4e6e8452cf3ac9/transformed/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/ede02a27188e30128c4e6e8452cf3ac9/transformed/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/7880efad619dc72d569f5e6e2c17444b/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/7880efad619dc72d569f5e6e2c17444b/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/d7331cfc52deae4583f878031781e6fb/transformed/lifecycle-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/d7331cfc52deae4583f878031781e6fb/transformed/lifecycle-runtime-2.0.0/AndroidManifest.xml:20:5-44
+	android:targetSdkVersion
+		INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/will/hermes-android/android/app/src/main/AndroidManifest.xml

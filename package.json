@@ -1,0 +1,11 @@
+{
+  "name": "hermes-android-private-preview",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bash build.sh",
+    "test": "node node_modules/vitest/vitest.mjs run --config vitest.android.config.ts",
+    "smoke": "node smoke.mjs"
+  }
+}

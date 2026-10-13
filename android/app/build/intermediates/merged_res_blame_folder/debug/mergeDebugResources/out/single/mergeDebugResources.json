@@ -1,0 +1,102 @@
+[
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-hdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-mdpi_ic_launcher_monochrome.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-mdpi/ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxhdpi_ic_launcher_legacy.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxhdpi/ic_launcher_legacy.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxhdpi_ic_launcher_monochrome.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxhdpi/ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-hdpi_ic_launcher_monochrome.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-hdpi/ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxxhdpi_ic_launcher_legacy.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxxhdpi/ic_launcher_legacy.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-hdpi_ic_launcher_legacy.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-hdpi/ic_launcher_legacy.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-hdpi_ic_launcher_background.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-hdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xhdpi_ic_launcher_legacy.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xhdpi/ic_launcher_legacy.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-mdpi_ic_launcher_legacy.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-mdpi/ic_launcher_legacy.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxxhdpi_ic_launcher_monochrome.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxxhdpi/ic_launcher_monochrome.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-mdpi_ic_launcher_background.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-mdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-mdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxhdpi_ic_launcher_background.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xxxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xhdpi_ic_launcher_background.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.hermes.privateapp-debug-4:/mipmap-xhdpi_ic_launcher_monochrome.png.flat",
+        "source": "com.hermes.privateapp-main-6:/mipmap-xhdpi/ic_launcher_monochrome.png"
+    }
+]

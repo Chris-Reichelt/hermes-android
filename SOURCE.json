@@ -1,0 +1,5 @@
+{
+  "source": "/home/will/.hermes/hermes-agent",
+  "commit": "96aa40a49f8c8725eb20c5a710c3937a54182bbb",
+  "snapshot": "working-tree renderer + shared; includes local customizations; no credentials/config copied"
+}

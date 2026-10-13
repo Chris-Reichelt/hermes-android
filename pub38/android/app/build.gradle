@@ -1,0 +1,22 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'com.hermes.privateapp'
+ compileSdk 35
+ defaultConfig { applicationId 'com.hermes.privateapp'; minSdk 26; targetSdk 35; versionCode 28; versionName '0.3.16-voicerouting' }
+ defaultConfig { testInstrumentationRunner 'com.hermes.privateapp.PushIntegrationRunner' }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+ signingConfigs { publicDebug {
+  storeFile file(System.getenv('PREVIEW_KEYSTORE') ?: '../.signing/debug.keystore')
+  storePassword 'android'
+  keyAlias 'androiddebugkey'
+  keyPassword 'android'
+ } }
+ buildTypes { debug { debuggable true; signingConfig signingConfigs.publicDebug; applicationIdSuffix '.publicpreview'; versionNameSuffix '-public-preview' } }
+}
+dependencyLocking { lockAllConfigurations() }
+dependencies {
+ implementation 'androidx.webkit:webkit:1.12.1'
+ implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+ testImplementation 'junit:junit:4.13.2'
+ testImplementation 'org.json:json:20240303'
+}

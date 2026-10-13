@@ -1,0 +1,31 @@
+/* Android-only shell: preserve the Desktop's actual wired surfaces. */
+html[data-android], [data-android] body, [data-android] #root { min-width: 0 !important; height: var(--phone-height, 100dvh); overflow: hidden; overscroll-behavior: none; }
+[data-android] [data-contrib-shell], [data-android] [data-slot=sidebar-wrapper] { height: 100% !important; min-height: 0 !important; width: 100%; }
+.phone-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; width: 100%; background: var(--ui-chat-surface-background); }
+.phone-nav { display: flex; flex: 0 0 auto; gap: 8px; padding: 6px 10px; border-bottom: 1px solid var(--ui-stroke-secondary); }
+.phone-nav button { min-height: 44px; flex: 1; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; font-size: 15px; font-weight: 600; }
+.phone-nav button[aria-expanded=true] { background: var(--ui-row-active-background); }
+.phone-connection { font-size: 12px; padding: 4px 12px; color: var(--ui-text-secondary); flex-shrink: 0; }
+.phone-audio-diagnostics { font-size: 12px; padding: 0 12px; flex-shrink: 0; max-height: 160px; overflow: auto; overflow-wrap: anywhere; }
+.phone-audio-diagnostics summary { min-height: 32px; cursor: pointer; }
+.phone-chat, .phone-sessions { flex: 1; min-height: 0; overflow: hidden; position: relative; }
+.phone-shell [hidden] { display: none !important; }
+.phone-sessions { --sidebar-width: 100%; }
+.phone-sessions [data-slot=sidebar] { width: 100% !important; }
+[data-android] [data-slot=composer-rich-input], [data-android] input, [data-android] textarea { font-size: 16px !important; }
+[data-android] [data-slot=composer-root] { max-width: 100%; }
+[data-android] [data-overlay-surface] { padding: 8px !important; height: var(--phone-height, 100dvh); }
+[data-android] [data-overlay-surface] button { min-height: 40px; }
+[data-android] [role=dialog] { max-width: calc(100vw - 16px) !important; max-height: calc(var(--phone-height, 100dvh) - 16px); }
+[data-android] { --conversation-text-font-size: 15px; }
+[data-android] [data-slot=aui_intro] { max-width: 310px; margin-inline: auto; padding: 12px; }
+[data-android] [data-slot=aui_intro] .wordmark { --fit-min: 1.5rem !important; width: 220px !important; }
+[data-android] [data-slot=composer-root] button { min-width: 40px; min-height: 44px; }
+@media (max-height: 550px) { [data-android] [data-slot=aui_intro] { display: none; } }
+[data-android] [data-slot=sidebar-menu-button] { min-height: 44px; }
+
+/* Keep touch model options fully within the phone viewport. */
+@media (pointer: coarse) {
+ [data-radix-popper-content-wrapper]:has(> [data-slot="dropdown-menu-sub-content"].w-52) { left:50% !important; top:50% !important; transform:translate(-50%,-50%) !important; z-index:100 !important; }
+ [data-slot="dropdown-menu-sub-content"].w-52 { max-width:calc(100vw - 16px); max-height:calc(100dvh - 32px); overflow-y:auto; }
+}

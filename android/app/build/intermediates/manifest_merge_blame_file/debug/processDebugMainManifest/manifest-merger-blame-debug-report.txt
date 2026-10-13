@@ -1,0 +1,109 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.hermes.privateapp.publicpreview"
+4    android:versionCode="22"
+5    android:versionName="0.3.11-public-preview" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:2:2-64
+11-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:2:19-61
+12    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+12-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:3:2-68
+12-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:3:19-65
+13    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+13-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:4:2-74
+13-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:4:19-71
+14    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+14-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:5:2-74
+14-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:5:19-71
+15    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+15-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:6:2-84
+15-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:6:19-81
+16    <!-- Chromium's Android audio-device selection requires BOTH permissions. -->
+17    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+17-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:8:2-77
+17-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:8:19-74
+18    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+18-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:9:2-77
+18-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:9:19-75
+19    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+19-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:10:3-77
+19-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:10:20-75
+20
+21    <application
+21-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:3-18:16
+22        android:allowBackup="false"
+22-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:136-163
+23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+23-->[androidx.core:core:1.1.0] /home/will/hermes-android/toolchain/gradle-home/caches/8.11.1/transforms/12388d32ff154de644b2df4a3cb5ad96/transformed/core-1.1.0/AndroidManifest.xml:24:18-86
+24        android:debuggable="true"
+25        android:extractNativeLibs="false"
+26        android:icon="@mipmap/ic_launcher"
+26-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:61-95
+27        android:label="Hermes Android (Dev Preview)"
+27-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:16-60
+28        android:roundIcon="@mipmap/ic_launcher"
+28-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:96-135
+29        android:theme="@android:style/Theme.Material.Light.NoActionBar"
+29-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:200-263
+30        android:usesCleartextTraffic="true" >
+30-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:11:164-199
+31        <activity
+31-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:3-16:14
+32            android:name="com.hermes.privateapp.MainActivity"
+32-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:13-41
+33            android:configChanges="orientation|screenSize|keyboardHidden"
+33-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:98-159
+34            android:exported="true"
+34-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:74-97
+35            android:launchMode="singleTask"
+35-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:42-73
+36            android:windowSoftInputMode="adjustResize" >
+36-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:12:160-202
+37            <intent-filter>
+37-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:4-145
+38                <action android:name="android.intent.action.MAIN" />
+38-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:19-70
+38-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:27-68
+39
+40                <category android:name="android.intent.category.LAUNCHER" />
+40-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:70-129
+40-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:13:80-127
+41            </intent-filter>
+42            <!-- Navigation only: no code/token/endpoint is accepted from this URI. PKCE stays on loopback. -->
+43            <intent-filter>
+43-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:4-281
+44                <action android:name="android.intent.action.VIEW" />
+44-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:19-70
+44-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:27-68
+45
+46                <category android:name="android.intent.category.DEFAULT" />
+46-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:70-128
+46-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:80-126
+47                <category android:name="android.intent.category.BROWSABLE" />
+47-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:128-188
+47-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:138-186
+48
+49                <data
+50                    android:host="complete"
+50-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:240-263
+51                    android:scheme="com.hermes.privateapp.publicpreview.auth-return" />
+51-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:15:194-239
+52            </intent-filter>
+53        </activity>
+54
+55        <service
+55-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:3-108
+56            android:name="com.hermes.privateapp.PushService"
+56-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:12-39
+57            android:exported="false"
+57-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:81-105
+58            android:foregroundServiceType="dataSync" />
+58-->/home/will/hermes-android/android/app/src/main/AndroidManifest.xml:17:40-80
+59    </application>
+60
+61</manifest>

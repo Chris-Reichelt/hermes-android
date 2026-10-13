@@ -16,7 +16,9 @@ export function createNativeRpc(port: NativePort) {
     request(method: string, params: any = {}): Promise<any> {
       return new Promise((resolve, reject) => {
         const id = ++sequence
-        const timer = setTimeout(() => { pending.delete(id); reject(new Error(`Android bridge timed out: ${method}`)) }, method.startsWith('download.') ? 600000 : 65000)
+        // Audio transcription/speak block server-side far past a normal API
+        // call; the native client now allows 300s, so api must outlast it.
+        const timer = setTimeout(() => { pending.delete(id); reject(new Error(`Android bridge timed out: ${method}`)) }, method.startsWith('download.') ? 600000 : method === 'api' ? 310000 : 65000)
         pending.set(id, {resolve, reject, timer})
         port.postMessage(JSON.stringify({id, method, params}))
       })
@@ -121,6 +123,23 @@ export function installAndroidBridge(port: NativePort) {
     writeClipboard: (text: string) => native.request('clipboard.write', {text}),
     openExternal: (url: string) => native.request('external', {url}),
     saveGatewayFile: (params: any) => native.request('download.file', {...params, profile: params.profile || selectedProfile}),
+    // The phone's file picker is the native attachment picker: one
+    // ACTION_OPEN_DOCUMENT per call; the staged-handle array is exactly the
+    // path list `selectDesktopPaths` returns back (Android has no window
+    // chrome, so title/defaultPath/filters are advisory and dropped).
+    selectPaths: async (options?: any) => {
+      const filters = Array.isArray(options?.filters) ? options.filters : []
+      const images = filters.some((filter: any) => (filter?.extensions ?? []).some((extension: string) => ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'tiff'].includes(String(extension).toLowerCase())))
+      if (options?.directories) throw new Error('Choose individual files on Android')
+      const handles = await native.request('attachment.pick', { profile: selectedProfile, images })
+      return Array.isArray(handles) ? handles : []
+    },
+    // Staged picks live in native cache; `attachment.read` answers with the
+    // same `data:<mime>;base64,` URL the desktop's readFileDataUrl returns.
+    readFileDataUrl: async (path: string) => {
+      if (typeof path !== 'string' || !path.startsWith('android-attachment:')) throw new Error('Not an Android attachment handle')
+      return await native.request('attachment.read', { path, profile: selectedProfile })
+    },
     readGatewayMedia: async (params: any) => {
       // Snapshot ownership before the native request; do not re-resolve after await.
       const result = await native.request('media.read', {...params, profile: params.profile || selectedProfile})
@@ -153,7 +172,9 @@ export function installAndroidBridge(port: NativePort) {
     petOverlay: {onControl: noEvent, onState: noEvent, pushState: noop, open: unsupported, close: unsupported},
   }
   for (const name of ['onBootProgress','onBackendExit','onPowerResume','onConnectionApplied','onWindowStateChanged','onBrowserPopoutClosed','onExternalOpenFailed','onFoundInPage','onOpenFindBarRequested','onContextMenuSpellcheck','onOpenUpdatesRequested','onFocusSession','onNotificationAction','onNotificationActivate','onDeepLink','onClosePreviewRequested','onPreviewNav','onOpenFolderRequested','onPreviewFileChanged']) bridge[name] = noEvent
-  for (const name of ['selectPaths','selectSavePath','openSessionWindow','openSessionInTerminal','openWindow','openBrowserWindow','readFileDataUrl','normalizePreviewTarget','reachPreviewUrl','revealLogs','resetBootstrap','repairBootstrap','applyConnectionConfig','saveConnectionConfig','testConnectionConfig','probeConnectionConfig','recycleBackend','relaunchApp','revealPath','openDir','saveImageBuffer','saveClipboardImage','reconcileDesktopPlugins','oauthLoginConnectionConfig','oauthLogoutConnectionConfig','setSecretStorageEncryption']) bridge[name] = unsupported
+  // `selectPaths` and `readFileDataUrl` are implemented above (native
+  // attachment picker/read) — keep them out of the unsupported list.
+  for (const name of ['selectSavePath','openSessionWindow','openSessionInTerminal','openWindow','openBrowserWindow','normalizePreviewTarget','reachPreviewUrl','revealLogs','resetBootstrap','repairBootstrap','applyConnectionConfig','saveConnectionConfig','testConnectionConfig','probeConnectionConfig','recycleBackend','relaunchApp','revealPath','openDir','saveImageBuffer','saveClipboardImage','reconcileDesktopPlugins','oauthLoginConnectionConfig','oauthLogoutConnectionConfig','setSecretStorageEncryption']) bridge[name] = unsupported
   ;(window as any).hermesDesktop = bridge
   return bridge
 }

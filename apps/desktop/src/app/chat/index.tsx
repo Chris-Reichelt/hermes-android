@@ -172,7 +172,7 @@ function ChatHeader({
   }
 
   return (
-    <header className={cn(titlebarHeaderBaseClass, isRoutedSessionView && titlebarHeaderShadowClass)}>
+    <header data-slot="chat-titlebar" className={cn(titlebarHeaderBaseClass, isRoutedSessionView && titlebarHeaderShadowClass)}>
       <div
         className={cn(titlebarHeaderTitleClass, showProfileTag && 'flex items-center')}
         style={{

@@ -1,12 +1,19 @@
 /* Android-only shell: preserve the Desktop's actual wired surfaces. */
 html[data-android], [data-android] body, [data-android] #root { min-width: 0 !important; height: var(--phone-height, 100dvh); overflow: hidden; overscroll-behavior: none; }
 [data-android] [data-contrib-shell], [data-android] [data-slot=sidebar-wrapper] { height: 100% !important; min-height: 0 !important; width: 100%; }
+/* The phone nav replaces the desktop titlebar: hide its absolutely-positioned
+   tool clusters (copy/share/read-aloud tools, profile pill) and the chat
+   titlebar — they were painting over the nav row. */
+[data-android] [data-titlebar-cluster] { display: none !important; }
+.phone-chat [data-slot=chat-titlebar] { display: none; }
 .phone-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; width: 100%; background: var(--ui-chat-surface-background); }
 .phone-nav { display: flex; flex: 0 0 auto; gap: 8px; padding: 6px 10px; border-bottom: 1px solid var(--ui-stroke-secondary); }
-.phone-nav button { min-height: 44px; flex: 1; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; font-size: 15px; font-weight: 600; }
+.phone-nav button { min-height: 44px; flex: 1; min-width: 0; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; font-size: 15px; font-weight: 600; }
 .phone-nav button[aria-expanded=true] { background: var(--ui-row-active-background); }
 .phone-connection { font-size: 11px; padding: 2px 12px; color: var(--ui-text-secondary); flex-shrink: 0; }
-.phone-read-aloud { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-height: 44px; flex: 0 0 auto; padding: 0 12px; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; font-size: 12px; font-weight: 600; }
+.phone-profile { min-height: 44px; max-width: 30%; flex: 0 1 auto; min-width: 0; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; background: transparent; color: var(--ui-text-primary); font-size: 13px; font-weight: 600; padding: 0 8px; }
+.phone-read-aloud { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 5px; min-height: 44px; flex: 0 0 auto; padding: 0 10px; border: 1px solid var(--ui-stroke-secondary); border-radius: 8px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.phone-read-aloud-icon { width: 16px; height: 16px; }
 .phone-read-aloud-state { border: 1px solid; border-radius: 4px; padding: 0 5px; font-size: 10px; line-height: 12px; }
 .phone-read-aloud[aria-checked=true] .phone-read-aloud-state { background: var(--ui-text-primary); color: var(--ui-chat-surface-background); }
 .phone-audio-diagnostics { font-size: 12px; padding: 0 12px; flex-shrink: 0; max-height: 160px; overflow: auto; overflow-wrap: anywhere; }
@@ -26,6 +33,10 @@ html[data-android], [data-android] body, [data-android] #root { min-width: 0 !im
 [data-android] [data-slot=composer-root] button { min-width: 40px; min-height: 44px; }
 @media (max-height: 550px) { [data-android] [data-slot=aui_intro] { display: none; } }
 [data-android] [data-slot=sidebar-menu-button] { min-height: 44px; }
+
+/* The attachment chip's remove-X is hover-revealed desktop chrome; touch has
+   no hover, so on the phone it must be visible and big enough to tap. */
+[data-android] [data-attachment-remove] { opacity: 1 !important; width: 32px; height: 32px; right: -10px; top: -10px; }
 
 /* Keep touch model options fully within the phone viewport. */
 @media (pointer: coarse) {

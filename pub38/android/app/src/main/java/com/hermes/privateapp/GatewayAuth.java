@@ -30,7 +30,7 @@ public final class GatewayAuth {
    failure instanceof IOException?"io":"other";
   return "Sign-in detail: "+signInStage.name().toLowerCase(Locale.ROOT).replace('_','-')+" / "+kind;
  }
- public GatewayAuth(String base, OkHttpClient http) { this.base=base; this.http=http.newBuilder().dispatcher(new Dispatcher()).connectionPool(new ConnectionPool()).followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false).callTimeout(60,TimeUnit.SECONDS).build(); }
+ public GatewayAuth(String base, OkHttpClient http) { this.base=base; this.http=http.newBuilder().dispatcher(new Dispatcher()).connectionPool(new ConnectionPool()).followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false).callTimeout(300,TimeUnit.SECONDS).build(); }
  public static final class AuthException extends IOException {
   public final int status;
   AuthException(int status) { super(status==401?"Session expired. Disconnect and sign in again.":status==429?"Too many login attempts. Wait and try again.":"Gateway HTTP "+status);this.status=status; }

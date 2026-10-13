@@ -9275,8 +9275,8 @@
       "_connection-registry-state-C4MY4T6q.js"
     ]
   },
-  "_subpages-B93YYbrE.js": {
-    "file": "assets/subpages-B93YYbrE.js",
+  "_subpages-UV9drJSe.js": {
+    "file": "assets/subpages-UV9drJSe.js",
     "name": "subpages",
     "imports": [
       "_rolldown-runtime-C_s2cVnS.js",
@@ -9560,7 +9560,7 @@
     ]
   },
   "index.html": {
-    "file": "assets/index-YgwfOQwq.js",
+    "file": "assets/index-C44VrH4n.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -9828,7 +9828,7 @@
     ]
   },
   "src/app/settings/index.tsx": {
-    "file": "assets/settings-BQpupgW0.js",
+    "file": "assets/settings-DMBiVJu5.js",
     "name": "settings",
     "src": "src/app/settings/index.tsx",
     "isDynamicEntry": true,
@@ -9838,7 +9838,7 @@
       "_actions-BJ5L-XsN.js",
       "_gateway--WUYJiLN.js",
       "_context-_zMPEgXQ.js",
-      "_subpages-B93YYbrE.js",
+      "_subpages-UV9drJSe.js",
       "_session-DbWk0Gtz.js",
       "_connections-CvYmalK4.js",
       "_connection-registry-state-C4MY4T6q.js",
@@ -10151,7 +10151,7 @@
     ]
   },
   "src/main.tsx": {
-    "file": "assets/main-D2IRIwj4.js",
+    "file": "assets/main-CyZ4bu7H.js",
     "name": "main",
     "src": "src/main.tsx",
     "isDynamicEntry": true,
@@ -10165,7 +10165,7 @@
       "_context-_zMPEgXQ.js",
       "_open-cron-run-CQuF252B.js",
       "_format-CYnFnnkk.js",
-      "_subpages-B93YYbrE.js",
+      "_subpages-UV9drJSe.js",
       "_session-DbWk0Gtz.js",
       "_connections-CvYmalK4.js",
       "_connection-registry-state-C4MY4T6q.js",
@@ -10300,7 +10300,7 @@
       "src/app/wake-indicator/wake-indicator-root.tsx"
     ],
     "css": [
-      "assets/main-DXodwbEm.css"
+      "assets/main-CwPHu-BT.css"
     ],
     "assets": [
       "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",

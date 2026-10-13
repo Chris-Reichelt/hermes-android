@@ -1,6 +1,5 @@
 import { useStore } from '@nanostores/react'
 import { useEffect, useRef } from 'react'
-import { tracePhoneSpeech } from '@/android/speech-diagnostics'
 
 import { releaseUnplayedSpokenReply, spokenReplyOf } from '@/lib/spoken-reply'
 import { playSpeechText } from '@/lib/voice-playback'
@@ -53,14 +52,12 @@ export function useAutoSpeakReplies({
 
   useEffect(() => {
     if (!enabled) {
-      tracePhoneSpeech('Read-aloud gate off', latest.current.profile)
       return undefined
     }
 
     // Don't read whatever reply already sits at the bottom when the toggle flips
     // on (or a chat opens) — consume it so only later replies are spoken.
     latest.current.markSpoken()
-    tracePhoneSpeech('Read-aloud armed; existing reply skipped', latest.current.profile)
 
     let attemptSeq = 0
 
@@ -78,7 +75,6 @@ export function useAutoSpeakReplies({
       }
 
       const attempt = ++attemptSeq
-      tracePhoneSpeech('Fresh reply accepted', profile)
 
       markSpoken()
       const marked = spokenReplyOf(sessionId)
@@ -87,7 +83,6 @@ export function useAutoSpeakReplies({
       // the row id, and a second claim would start a second clip.
       void ownsAmbientCue(`speak:${reply.turnKey ?? reply.id}`).then(owns => {
         if (!owns || attempt !== attemptSeq) {
-          tracePhoneSpeech('Reply skipped: ownership or stale attempt', profile)
           return
         }
 
@@ -107,7 +102,6 @@ export function useAutoSpeakReplies({
             if (attempt === attemptSeq) {
               releaseUnplayedSpokenReply(sessionId, marked)
               notifyError(error, failureLabel)
-              tracePhoneSpeech('Read-aloud failed; see error notification', profile)
             }
           }
         )

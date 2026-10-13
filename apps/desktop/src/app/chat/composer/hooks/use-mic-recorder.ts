@@ -48,12 +48,8 @@ interface MicRecorderHandle {
 export function micError(error: unknown, copy: MicRecorderErrorCopy): Error {
   const name = error instanceof DOMException ? error.name : ''
 
-  if (name === 'NotReadableError' || name === 'TrackStartError') {
-    // Android capture contract (tests/microphone.test.ts): on WebView these
-    // usually mean the platform has not released the previous AudioRecord,
-    // not another app owning the mic — the loop retries, so say "could not
-    // start" with the raw name instead of misdiagnosing "already in use".
-    return new Error(`${copy.microphoneStartFailed} (${name})`)
+  if (name === 'NotAllowedError' || name === 'SecurityError') {
+    return new Error(copy.microphonePermissionDenied)
   }
 
   if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
@@ -61,9 +57,10 @@ export function micError(error: unknown, copy: MicRecorderErrorCopy): Error {
   }
 
   if (name === 'NotReadableError' || name === 'TrackStartError') {
-    // Capture failed, but this name does not identify the owner or cause.
-    // Android WebView also returns it when native audio routing cannot open.
-    // Keep a bounded browser error code, never raw device labels/messages.
+    // Android capture contract (tests/microphone.test.ts): on WebView these
+    // usually mean the platform has not released the previous AudioRecord,
+    // not another app owning the mic — the loop retries, so say "could not
+    // start" with the raw name instead of misdiagnosing "already in use".
     return new Error(`${copy.microphoneStartFailed} (${name})`)
   }
 

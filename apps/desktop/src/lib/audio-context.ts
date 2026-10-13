@@ -21,6 +21,7 @@
 let ctx: AudioContext | null = null
 let soundDest: AudioNode | null = null
 let mediaSink: HTMLAudioElement | null = null
+const mediaSinks: { dest: AudioNode; el: HTMLAudioElement }[] = []
 
 function ensureMediaSink(ac: AudioContext): AudioNode {
   if (soundDest) {
@@ -52,6 +53,26 @@ export function getSoundDestination(): AudioNode | null {
   const ac = getAudioContext()
 
   return ac ? ensureMediaSink(ac) : null
+}
+
+/** Route an arbitrary AudioContext's output through a hidden media-stream <audio>
+ *  element (STREAM_MUSIC: system volume, ringer silence, Bluetooth routing). Used
+ *  for streamed TTS playback, which runs on its own context for latency. */
+export function attachMediaSink(ac: AudioContext): AudioNode {
+  try {
+    const dest = ac.createMediaStreamDestination()
+    const el = document.createElement('audio')
+    el.srcObject = dest.stream
+    el.autoplay = true
+    el.volume = 1
+    void el.play().catch(() => undefined)
+    // Keep the element alive for the context's lifetime; nothing else holds it.
+    mediaSinks.push({ el, dest })
+
+    return dest
+  } catch {
+    return ac.destination
+  }
 }
 
 /** Whether UI sonification is allowed by the phone's system settings.

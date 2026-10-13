@@ -1,9 +1,9 @@
 import { resolveGatewayWsUrl } from '@hermes/shared'
-import { tracePhoneSpeech } from '@/android/speech-diagnostics'
 
 import type { OwnerScope } from '@/api/client'
 import { getApiRequestConnection, getApiRequestProfile, speakText } from '@/hermes'
 import { directTtsConfig, type DirectTtsConfig, synthesizeSpeechClientDirect } from '@/lib/voice-client-direct'
+import { attachMediaSink } from '@/lib/audio-context'
 import { RECONNECT_ATTEMPT_TIMEOUT_MS, withTimeout } from '@/lib/with-timeout'
 import {
   $voicePlayback,
@@ -21,7 +21,13 @@ import { cutSentences, sanitizeTextForSpeech } from './speech-text'
 const PLAYBACK_STALL_MS = 15_000
 
 let currentAudio: HTMLAudioElement | null = null
-let currentStop: (() => void) | null = null
+// Every live playback registers its barge-in stop here: streaming sessions
+// (kill the WebSocket + AudioContext) and data-URL audio elements (cut
+// playback). A single slot cannot represent two overlapping playbacks — the
+// overwritten session keeps its socket open, keeps scheduling buffers, and
+// its audio resurfaces on a later turn (#91991). Draining the whole set keeps
+// stopVoicePlayback() deterministic no matter how playbacks overlap.
+const liveStops = new Set<() => void>()
 let sequence = 0
 let claimTurnKey: string | null = null
 let inFlight: { done: Promise<boolean>; turnKey: string } | null = null
@@ -87,8 +93,14 @@ export interface VoicePlaybackOptions extends OwnerScope {
 export function stopVoicePlayback() {
   inFlight = null
   sequence += 1
-  currentStop?.()
-  currentStop = null
+
+  // Drain EVERY live playback, not just the newest. Each stop is idempotent
+  // and unregisters itself; the snapshot keeps the iteration safe.
+  for (const stop of [...liveStops]) {
+    stop()
+  }
+
+  liveStops.clear()
 
   if (currentAudio) {
     currentAudio.pause()
@@ -224,6 +236,12 @@ function openClientDirectSpeechSession(tts: DirectTtsConfig, options: VoicePlayb
 
   let settle: (value: 'done' | 'fallback') => void = () => undefined
 
+  // stopVoicePlayback() → immediate barge-in: settle this session so its
+  // queued audio never resumes. Registered until settle, so a barge always
+  // reaches this session even while another playback is live alongside it
+  // (#91991).
+  const stop = () => settle(started ? 'done' : 'fallback')
+
   const done = new Promise<'done' | 'fallback'>(resolve => {
     settle = value => {
       if (settled) {
@@ -231,7 +249,7 @@ function openClientDirectSpeechSession(tts: DirectTtsConfig, options: VoicePlayb
       }
 
       settled = true
-      currentStop = null
+      liveStops.delete(stop)
 
       if (playing) {
         playing.pause()
@@ -243,7 +261,7 @@ function openClientDirectSpeechSession(tts: DirectTtsConfig, options: VoicePlayb
     }
   })
 
-  currentStop = () => settle(started ? 'done' : 'fallback')
+  liveStops.add(stop)
 
   const pump = async () => {
     if (synthesizing || settled) {
@@ -377,6 +395,12 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
 
   let settle: (value: 'done' | 'fallback') => void = () => undefined
 
+  // stopVoicePlayback() → immediate barge-in: kill the socket (the server
+  // aborts synthesis on disconnect) and the audio context (cuts sound now).
+  // Registered until settle, so a barge always reaches this session even
+  // while another playback is live alongside it (#91991).
+  const stop = () => settle('done')
+
   const done = new Promise<'done' | 'fallback'>(resolve => {
     settle = value => {
       if (settled) {
@@ -384,7 +408,7 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
       }
 
       settled = true
-      currentStop = null
+      liveStops.delete(stop)
 
       try {
         ws.close()
@@ -408,9 +432,7 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
     }
   }
 
-  // stopVoicePlayback() → immediate barge-in: kill the socket (the server
-  // aborts synthesis on disconnect) and the audio context (cuts sound now).
-  currentStop = () => settle('done')
+  liveStops.add(stop)
 
   const finishWhenDrained = () => {
     const remainingMs = context ? Math.max(0, nextStartAt - context.currentTime) * 1_000 : 0
@@ -453,7 +475,7 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
 
     const source = context.createBufferSource()
     source.buffer = buffer
-    source.connect(context.destination)
+    source.connect(playbackSink ??= attachMediaSink(context))
 
     const startAt = Math.max(context.currentTime + 0.05, nextStartAt)
     source.start(startAt)
@@ -464,6 +486,8 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
       setVoicePlaybackState(currentState('speaking', options))
     }
   }
+
+  let playbackSink: AudioNode | null = null
 
   ws.onopen = () => {
     pendingSends.splice(0).forEach(data => ws.send(data))
@@ -487,7 +511,6 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
     if (frame.type === 'start') {
       streamRate = frame.sample_rate || 24_000
       context = new AudioContext()
-      tracePhoneSpeech(`Speech stream audio context ${context.state}`, options.profile)
 
       // Autoplay policy can hand back a suspended context when playback wasn't
       // started by a user gesture (e.g. a wake-word-started voice turn). Resume
@@ -500,7 +523,6 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
 
       nextStartAt = 0
     } else if (frame.type === 'end') {
-      tracePhoneSpeech(context?.state === 'suspended' ? 'Speech stream ended with audio SUSPENDED; playback not verified' : 'Speech stream ended', options.profile)
       finishWhenDrained()
     } else if (frame.type === 'fallback') {
       settle(started ? 'done' : 'fallback')
@@ -540,16 +562,27 @@ function openSpeechStream(wsUrl: string, options: VoicePlaybackOptions): SpeechS
  * `playSpeechText`).
  */
 export async function startSpeechStream(options: VoicePlaybackOptions): Promise<null | SpeechStreamSession> {
+  const startSequence = sequence
+
   const direct = await directTtsConfig(options).catch(() => null)
 
   if (direct) {
+    // A stop (barge-in, Stop button, another playback) landed while the
+    // direct TTS config was resolving — do not resurrect stopped playback.
+    if (sequence !== startSequence) {
+      return null
+    }
+
     stopVoicePlayback()
     setVoicePlaybackState(currentState('preparing', options))
 
     const session = openClientDirectSpeechSession(direct, options)
+    const sessionSequence = sequence
 
     void session.done.then(outcome => {
-      if (outcome === 'done') {
+      // A settled session must not reset the state of a NEWER playback —
+      // only write idle when no other playback started since this one.
+      if (outcome === 'done' && sessionSequence === sequence) {
         setVoicePlaybackState(currentState('idle'))
       }
     })
@@ -563,13 +596,24 @@ export async function startSpeechStream(options: VoicePlaybackOptions): Promise<
     return null
   }
 
+  // A stop (barge-in, Stop button, another playback) landed while the
+  // stream URL was resolving — do not resurrect playback that was already
+  // stopped. This is the reported overlap (#91991): barge + next-turn open
+  // crossing the async discovery gap previously orphaned the older session.
+  if (sequence !== startSequence) {
+    return null
+  }
+
   stopVoicePlayback()
   setVoicePlaybackState(currentState('preparing', options))
 
   const session = openSpeechStream(wsUrl, options)
+  const sessionSequence = sequence
 
   void session.done.then(outcome => {
-    if (outcome === 'done') {
+    // A settled session must not reset the state of a NEWER playback — only
+    // write idle when no other playback started since this one was created.
+    if (outcome === 'done' && sessionSequence === sequence) {
       setVoicePlaybackState(currentState('idle'))
     }
   })
@@ -592,7 +636,6 @@ async function playSpeechDataUrl(
   isCurrent: () => boolean
 ): Promise<boolean> {
   const response = await speakText(speakableText, options)
-  tracePhoneSpeech('REST synthesis response received', options.profile)
 
   if (!isCurrent()) {
     return false
@@ -605,6 +648,13 @@ async function playSpeechDataUrl(
   await new Promise<void>((resolve, reject) => {
     let stall: number | null = null
 
+    // Registered until cleanup so stopVoicePlayback() reaches this element
+    // even while a streaming session is live alongside it (#91991).
+    const stop = () => {
+      cleanup()
+      resolve()
+    }
+
     const cleanup = () => {
       if (stall !== null) {
         window.clearTimeout(stall)
@@ -614,7 +664,7 @@ async function playSpeechDataUrl(
       audio.removeEventListener('ended', onEnded)
       audio.removeEventListener('error', onError)
       audio.removeEventListener('timeupdate', armStall)
-      currentStop = null
+      liveStops.delete(stop)
     }
 
     const armStall = () => {
@@ -638,10 +688,7 @@ async function playSpeechDataUrl(
       reject(new Error('Playback failed'))
     }
 
-    currentStop = () => {
-      cleanup()
-      resolve()
-    }
+    liveStops.add(stop)
 
     audio.addEventListener('ended', onEnded, { once: true })
     audio.addEventListener('error', onError, { once: true })
@@ -652,8 +699,7 @@ async function playSpeechDataUrl(
     // autoplayPolicy: no-user-gesture-required to prevent this, but retry once
     // after resuming a shared AudioContext as a fallback for other surfaces
     // (dashboard-embedded) so the first reply isn't silently dropped.
-    void audio.play().catch(async error => {
-      tracePhoneSpeech(error?.name === 'NotAllowedError' ? 'Autoplay blocked by WebView' : 'Audio element play rejected', options.profile)
+    void audio.play().catch(async () => {
       try {
         await unlockAutoplay()
         await audio.play()
@@ -691,7 +737,7 @@ export async function playSpeechText(text: string, options: VoicePlaybackOptions
         if (inFlight?.done === done) {
           inFlight = null
         }
-      }).catch(() => undefined) // cleanup branch must not leak an unhandled rejection
+      })
     }
 
     return done
@@ -718,7 +764,6 @@ async function startSpeechText(text: string, options: VoicePlaybackOptions): Pro
     // Ladder: client-direct synthesis (profile's own TTS, no gateway audio
     // hop) → streaming WS relay → POST data-URL fallback.
     const direct = options.syncOnly ? null : await directTtsConfig(options).catch(() => null)
-    tracePhoneSpeech(direct ? 'Trying client-direct synthesis' : 'Client-direct unavailable; trying gateway stream', options.profile)
 
     if (direct && isCurrent()) {
       const session = openClientDirectSpeechSession(direct, options)
@@ -745,7 +790,6 @@ async function startSpeechText(text: string, options: VoicePlaybackOptions): Pro
     const streamUrl = options.syncOnly ? null : await resolveSpeakStreamUrl(options)
 
     if (streamUrl && isCurrent()) {
-      tracePhoneSpeech('Opening owner-scoped speech stream', options.profile)
       const outcome = await playSpeechStream(streamUrl, speakableText, options)
 
       if (outcome === 'played') {
@@ -763,7 +807,6 @@ async function startSpeechText(text: string, options: VoicePlaybackOptions): Pro
       return false
     }
 
-    tracePhoneSpeech('Trying owner-scoped REST synthesis', options.profile)
     const played = await playSpeechDataUrl(speakableText, options, isCurrent)
 
     if (played) {
@@ -773,7 +816,6 @@ async function startSpeechText(text: string, options: VoicePlaybackOptions): Pro
     return played
   } catch (error) {
     if (isCurrent()) {
-      currentStop = null
       currentAudio = null
       setVoicePlaybackState(currentState('idle'))
     }

@@ -24,6 +24,15 @@ import { VoiceMenu } from './voice-menu'
 // for these here, and the row is where they read as belonging.
 export { ACTIVE_ICON_BTN, GHOST_ICON_BTN, ICON_BTN, PRIMARY_ICON_BTN } from './control-classes'
 
+/** True in the Android phone renderer, where `controller.tsx` mounts the
+ *  PhoneShell. The composer's width-driven collapse rules assume a hover
+ *  pointer; on a touch device they strand hover-only affordances, so a few
+ *  controls need to opt out of the desktop ladder. `platform` is stamped by
+ *  the Android shell at runtime but is not in the desktop `hermesDesktop`
+ *  type, so read it through a narrow cast. */
+const isAndroidPlatform = (): boolean =>
+  (window.hermesDesktop as { platform?: string } | undefined)?.platform === 'android'
+
 interface ConversationProps {
   active: boolean
   level: number
@@ -120,7 +129,14 @@ export function ComposerControls({
           {hideModelPill ? null : (
             <>
               <ModelPill compact={compactModelPill} disabled={disabled} model={state.model} />
-              {compactModelPill ? null : <ReasoningPill disabled={disabled} model={state.model} />}
+              {/* Compact hides the reasoning pill to save a few px in the desktop
+                  floating/HUD bar, where reasoning is still reachable through the
+                  model catalog's hover submenu. A phone has no hover and the
+                  compact model pill is a bare chevron, so hiding it there strands
+                  the reasoning level with no control at all (the composer is
+                  always under the 560px compact threshold on a phone). Keep the
+                  pill on Android; it is small and the row's model pill shrinks. */}
+              {compactModelPill && !isAndroidPlatform() ? null : <ReasoningPill disabled={disabled} model={state.model} />}
             </>
           )}
           {voiceControls}

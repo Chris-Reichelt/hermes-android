@@ -2,7 +2,7 @@ plugins { id 'com.android.application' }
 android {
  namespace 'com.hermes.privateapp'
  compileSdk 35
- defaultConfig { applicationId 'com.hermes.privateapp'; minSdk 26; targetSdk 35; versionCode 23; versionName '0.3.12-pushfix19' }
+ defaultConfig { applicationId 'com.hermes.privateapp'; minSdk 26; targetSdk 35; versionCode 40; versionName '0.3.28-apk40' }
  compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
  signingConfigs { publicDebug {
   storeFile file('../.signing/debug.keystore')

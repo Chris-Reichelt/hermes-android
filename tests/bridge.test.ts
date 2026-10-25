@@ -42,7 +42,11 @@ describe('Android adapter contracts',()=>{
   expect((await bridge.getConnectionFor({connectionId:'android-remote',profile:'vee'})).profile).toBe('vee')
   await expect(bridge.getConnectionFor({connectionId:'unknown',profile:'q'})).rejects.toThrow('refusing to retarget')
   expect(requests).toHaveLength(2)
-  await expect(bridge.selectPaths()).rejects.toThrow('Not available')
+  // `selectPaths` is the native SAF picker now (apk39), not the old
+  // 'Not available' stub: it routes an `attachment.pick` through the bridge and
+  // returns [] when the picker yields no handles.
+  expect(await bridge.selectPaths()).toEqual([])
+  expect(requests[2]).toMatchObject({method:'attachment.pick'})
  })
  it('reports native socket-open rejection to property handlers used by speech',async()=>{
   const port:NativePort={onmessage:null,postMessage(raw){const c=JSON.parse(raw);queueMicrotask(()=>port.onmessage!({data:JSON.stringify({id:c.id,error:'TEST FIXTURE open refused'})}))}}

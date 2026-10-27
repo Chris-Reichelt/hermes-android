@@ -21,6 +21,7 @@ import { Slot as ContribSlot } from '@/contrib/react/slot'
 import { useI18n } from '@/i18n'
 import { chatMessageText } from '@/lib/chat-messages'
 import { sanitizeComposerInput } from '@/lib/composer-input-sanitize'
+import { isAndroidShell } from '@/lib/audio-context'
 import { DATA_IMAGE_URL_RE } from '@/lib/embedded-images'
 import { triggerHaptic } from '@/lib/haptics'
 import { isMacPlatform } from '@/lib/platform'
@@ -92,6 +93,8 @@ import {
   deleteSelectionInEditor,
   insertComposerContentsAtCaret,
   normalizeComposerEditorDom,
+  placeCaretEnd,
+  renderComposerContents,
   RICH_INPUT_SLOT
 } from './rich-editor'
 import { useComposerScope, useComposerSurfaceId } from './scope'
@@ -548,7 +551,23 @@ export function ChatBar({
       return
     }
 
-    scheduleFlushEditorToDraft(event.currentTarget)
+    const editor = event.currentTarget
+
+    // The Android paste path inserts natively (see handlePaste); the raw URL
+    // lands as text, so rewrite it into `@url:` directives and repaint the
+    // chips on the same input event — the paste reads as a chip immediately,
+    // with no space-then-backspace ritual and no stale IME buffer behind it.
+    if (isAndroidShell()) {
+      const text = composerPlainText(editor)
+      const linkified = linkifyUrls(text)
+
+      if (linkified !== text) {
+        renderComposerContents(editor, linkified)
+        placeCaretEnd(editor)
+      }
+    }
+
+    scheduleFlushEditorToDraft(editor)
   }
 
   // Native typing/deleting mutates the DOM through Chromium's editing pipeline,
@@ -617,6 +636,18 @@ export function ChatBar({
     if (DATA_IMAGE_URL_RE.test(pastedText)) {
       event.preventDefault()
 
+      return
+    }
+
+    // Android WebView: never preventDefault a text paste. WebView keeps the
+    // pasted text in the IME's composition buffer even after a programmatic
+    // insert replaces it, and every later keystroke then re-appends the tail
+    // of the URL at the caret — Chris's apk41 repro: backspacing a pasted
+    // Amazon order link emitted "packagepackageppackapackage…" forever. Let
+    // Chromium insert natively; handleEditorInput linkifies and chips the
+    // landed text on the SAME input event, so the chip still appears
+    // instantly — and the IME never holds a buffer it has to re-insert.
+    if (imageBlobs.length === 0 && isAndroidShell()) {
       return
     }
 

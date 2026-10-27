@@ -33,7 +33,8 @@ const mediaSinks: { dest: AudioNode; el: HTMLAudioElement }[] = []
 // quitting the app. So: mirror on Android, plain `ctx.destination` everywhere
 // else. `platform` is stamped by the Android shell (same read as the composer's
 // `isAndroidPlatform`); the desktop `hermesDesktop` type has no such key.
-const isAndroidShell = (): boolean =>
+export const isAndroidShell = (): boolean =>
+  typeof window !== 'undefined' &&
   (window.hermesDesktop as { platform?: string } | undefined)?.platform === 'android'
 
 // Chromium opens the audio output device the moment an AudioContext starts

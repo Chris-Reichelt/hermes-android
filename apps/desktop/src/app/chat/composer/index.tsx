@@ -279,6 +279,7 @@ export function ChatBar({
   // engine writes it — an explicit shared handle, not a back-reference.
   const queueEditRef = useRef<QueueEditState | null>(null)
   const composingRef = useRef(false) // true during IME composition (CJK input)
+  const chipFreshUntilRef = useRef(0) // ms timestamp: a chip was just chipped from a paste, so glued text after it is URL tail residue, not typed text
   // The blur-close timer must not outlive the composer: an unmounted editor's
   // deferred closeTrigger() would setState after teardown (vitest reported it as
   // an unhandled "window is not defined" from paste-url-is-text.test.tsx).
@@ -574,10 +575,16 @@ export function ChatBar({
     // chips on the same input event — the paste reads as a chip immediately,
     // with no space-then-backspace ritual and no stale IME buffer behind it.
     if (isAndroidShell()) {
-      const text = foldUrlResidue(linkifyUrls(composerPlainText(editor)))
-      const linkified = linkifyUrls(text)
+      // Fold the paste tail back into the chip ONLY while the chip is fresh
+      // (just chipped from this paste): the IME commits the tail within
+      // milliseconds of the repaint, while text Chris types seconds later
+      // must stay text — a time-gated fold stopped apk48 from swallowing
+      // typed words into the URL reference (`…noPtRedirect=1nope`).
+      const fresh = Date.now() < chipFreshUntilRef.current
+      const plain = composerPlainText(editor)
+      const linkified = fresh ? foldUrlResidue(linkifyUrls(plain)) : linkifyUrls(plain)
 
-      if (linkified !== composerPlainText(editor)) {
+      if (linkified !== plain) {
         renderComposerContents(editor, linkified)
         // Chromium likes to leave phantom scaffolding (empty text nodes, a
         // trailing break) after a programmatic repaint — and the chip delete
@@ -586,6 +593,7 @@ export function ChatBar({
         // before placing the caret.
         normalizeComposerEditorDom(editor)
         placeCaretEnd(editor)
+        chipFreshUntilRef.current = Date.now() + 1500
         alert('repaint:chip')
       }
     }
@@ -648,7 +656,7 @@ export function ChatBar({
     }
 
     const onNativeBeforeInput = (event: InputEvent) => {
-      if (event.inputType !== 'deleteContentBackward' || event.isComposing || event.defaultPrevented) {
+      if (event.inputType !== 'deleteContentBackward' || event.defaultPrevented) {
         return
       }
 
@@ -656,10 +664,31 @@ export function ChatBar({
       // Chromium's phantom scaffolding out of the caret's way first.
       normalizeComposerEditorDom(editor)
 
-      if (withUndoPoint(() => deleteChipBeforeCaret(editor))) {
+      // The composing flag is NOT a blanket skip: the paste tail often lands
+      // as IME composition (the highlighted residue), and backspace on it
+      // means "delete the chip", not "delete one composition character".
+      // The strict delete still refuses to reach across live composition;
+      // the trailing fallback eats a short composed residue as part of the
+      // chip when the caret is at the composer's end.
+      const composing = event.isComposing
+
+      const deleted = composing
+        ? false
+        : withUndoPoint(() => deleteChipBeforeCaret(editor))
+
+      if (deleted) {
         alert('del:adjacent')
         event.preventDefault()
         flushEditorToDraft(editor)
+
+        if (isAndroidShell()) {
+          // Reset the IME session: a stale composition buffer re-inserts the
+          // tail the instant the DOM changes under it — the chip reappears
+          // faster than you can see it deleted ("delete replication of the
+          // last word"). Blur/focus is the one reliable composition reset.
+          editor.blur()
+          editor.focus()
+        }
 
         return
       }
@@ -667,10 +696,15 @@ export function ChatBar({
       // The caret's neighbour is something the strict delete won't reach
       // across. On a phone, backspace at the end of a composer holding a
       // chip means "delete the chip" — take the chip regardless.
-      if (withUndoPoint(() => deleteTrailingChipAtEnd(editor))) {
+      if (withUndoPoint(() => deleteTrailingChipAtEnd(editor, composing))) {
         alert('del:trailing')
         event.preventDefault()
         flushEditorToDraft(editor)
+
+        if (isAndroidShell()) {
+          editor.blur()
+          editor.focus()
+        }
       }
     }
 

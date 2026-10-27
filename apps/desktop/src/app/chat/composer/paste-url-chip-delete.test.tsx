@@ -152,4 +152,44 @@ describe('phone: pasted link chips, then the keyboard deletes the chip', () => {
     expect(editor.querySelector('[data-ref-kind="url"]')).toBeNull()
     expect(backspace.defaultPrevented).toBe(true)
   })
+
+  it('backspace during live composition of the paste tail deletes the chip, not one composition character', () => {
+    const { container } = render(<Harness />)
+
+    const editor = container.querySelector<HTMLElement>(`[data-slot="${RICH_INPUT_SLOT}"]`)!
+
+    Object.defineProperty(editor, 'isContentEditable', { configurable: true, value: true })
+    editor.focus()
+
+    editor.textContent = URL.slice(0, -1)
+
+    act(() => {
+      fireEvent.input(editor)
+    })
+
+    expect(editor.querySelector('[data-ref-kind="url"]')).not.toBeNull()
+
+    // The tail sits in live IME composition — compositionend has not fired,
+    // no input event has run for it. Chris's screenshots: the highlighted
+    // residue between the caret and the chip.
+    editor.appendChild(document.createTextNode('1'))
+    placeCaretEnd(editor)
+
+    const backspace = new InputEvent('beforeinput', {
+      bubbles: true,
+      cancelable: true,
+      inputType: 'deleteContentBackward',
+      isComposing: true
+    })
+
+    act(() => {
+      editor.dispatchEvent(backspace)
+    })
+
+    // The chip AND its composed tail are gone — not one character, and the
+    // native composition delete was cancelled so the buffer can't re-insert.
+    expect(editor.querySelector('[data-ref-kind="url"]')).toBeNull()
+    expect(editor.textContent ?? '').not.toContain('https://')
+    expect(backspace.defaultPrevented).toBe(true)
+  })
 })

@@ -528,7 +528,7 @@ export function deleteChipBeforeCaret(editor: HTMLElement): boolean {
  *  end of a composer holding a chip means "delete the chip"; node
  *  archaeology shouldn't be the user's problem. Real typed text after the
  *  chip makes the last meaningful node a text node, so typing stays native. */
-export function deleteTrailingChipAtEnd(editor: HTMLElement): boolean {
+export function deleteTrailingChipAtEnd(editor: HTMLElement, skipComposedResidue = false): boolean {
   const hit = composerSelectionRange(editor)
 
   if (!hit || !hit.range.collapsed) {
@@ -554,6 +554,13 @@ export function deleteTrailingChipAtEnd(editor: HTMLElement): boolean {
 
   while (node && (isEmptyTextNode(node) || node.nodeName === 'BR')) {
     node = node.previousSibling
+  }
+
+  // A short glued text node is the paste tail sitting in live IME
+  // composition (the highlighted residue). Backspace on it means the chip,
+  // not one composition character — step across it onto the chip.
+  if (skipComposedResidue && node?.nodeType === Node.TEXT_NODE && !/[\s`]/.test(node.textContent ?? '') && (node.textContent?.length ?? 0) <= 40) {
+    node = meaningfulPreviousSibling(node)
   }
 
   if (node?.nodeType !== Node.ELEMENT_NODE || !(node as HTMLElement).dataset.refText) {

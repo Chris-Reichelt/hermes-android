@@ -21,7 +21,7 @@ afterEach(cleanup)
 // deletes) and the chip-delete is adjacency-strict, so the repaint must
 // normalize Chromium's phantom scaffolding before the caret — this test
 // drives the exact Android sequence.
-const URL = 'https://www.amazon.com/progress-tracker/package/preship/cancel-items?orderID=112-1842805'
+const URL = 'https://www.amazon.com/progress-tracker/package/preship/cancel-items?orderID=112-1842805&x=1'
 
 const state: ChatBarState = {
   model: { canSwitch: false, model: '', provider: '' },
@@ -72,17 +72,32 @@ describe('phone: pasted link chips, then the keyboard deletes the chip', () => {
     editor.focus()
 
     // 1. Android paste: handlePaste does NOT preventDefault; Chromium's
-    //    editing pipeline inserts the raw URL text, then fires input.
-    editor.textContent = URL
+    //    editing pipeline inserts the URL text — but the IME commits the
+    //    TAIL (`1`) after the first input event (Chris's apk45 screenshot:
+    //    chip ending at `noPtRedirect=` with a stray `1` after it).
+    editor.textContent = URL.slice(0, -1)
 
     act(() => {
       fireEvent.input(editor)
     })
 
-    // 2. The input handler linkified + repainted: the URL is a chip now.
+    // The head chipped; the tail has not arrived yet.
+    expect(editor.querySelector('[data-ref-kind="url"]')).not.toBeNull()
+
+    // The IME commits the tail as a text node glued after the chip element.
+    editor.appendChild(document.createTextNode('1'))
+
+    act(() => {
+      fireEvent.input(editor)
+    })
+
+    // 2. The residue folded back into the chip: the URL is complete and NO
+    //    raw text sits between the caret and the chip.
     const chip = editor.querySelector('[data-ref-kind="url"]')
 
     expect(chip).not.toBeNull()
+    expect(chip?.getAttribute('data-ref-id')).toBe(URL)
+    expect(editor.textContent ?? '').not.toContain('https://')
 
     // 3. Phone backspace: Gboard delivers neither a Backspace keydown nor a
     //    React polyfill event — only the native beforeinput below.

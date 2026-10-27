@@ -116,6 +116,21 @@ import {
 } from './url-refs'
 import { VoiceActivity, VoicePlaybackActivity } from './voice-activity'
 
+// The IME commits the tail of a pasted URL AFTER the input-time repaint has
+// already chipped its head (Chris's apk45 screenshot: chip ending at
+// `noPtRedirect=` with a stray highlighted `1` after it). The residue sits
+// between the caret and the chip — exactly where the adjacency-strict delete
+// refuses to reach across — and the chip's URL lost the tail it is holding.
+// Fold the glued residue back into the directive's value: the reference
+// regains the full URL and the caret faces the chip directly. Only residue
+// glued to the closing backtick matches — text typed after the chip lands
+// behind its auto-inserted space, so it never reads as residue.
+const URL_RESIDUE_RE = /@url:`([^`]+)`([^\s`]{1,40})(?=\s|$)/g
+
+function foldUrlResidue(text: string) {
+  return text.replace(URL_RESIDUE_RE, (_match, url: string, residue: string) => `@url:\`${url + residue}\``)
+}
+
 export function ChatBar({
   busy,
   cwd,
@@ -558,10 +573,10 @@ export function ChatBar({
     // chips on the same input event — the paste reads as a chip immediately,
     // with no space-then-backspace ritual and no stale IME buffer behind it.
     if (isAndroidShell()) {
-      const text = composerPlainText(editor)
+      const text = foldUrlResidue(linkifyUrls(composerPlainText(editor)))
       const linkified = linkifyUrls(text)
 
-      if (linkified !== text) {
+      if (linkified !== composerPlainText(editor)) {
         renderComposerContents(editor, linkified)
         // Chromium likes to leave phantom scaffolding (empty text nodes, a
         // trailing break) after a programmatic repaint — and the chip delete

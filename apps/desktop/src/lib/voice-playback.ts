@@ -60,6 +60,13 @@ async function unlockAutoplay(): Promise<void> {
   if (unlockCtx.state === 'suspended') {
     await unlockCtx.resume()
   }
+
+  // The unlock is one-shot: an AudioContext left open holds Chromium's audio
+  // output device (media-role on PulseAudio/PipeWire — suspends every other
+  // app's playback) for the context's whole life, and after the first
+  // successful playback there is nothing left to unlock. Drop it.
+  unlockCtx.close().catch(() => undefined)
+  unlockCtx = null
 }
 
 function currentState(

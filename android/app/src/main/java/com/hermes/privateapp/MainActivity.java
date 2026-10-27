@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
   showSetup();
   if(state!=null)setupStatus.setText("Session was cleared when Android recreated the app. Your gateway and profile are remembered; tap Sign in to reconnect.");
  }
- @Override protected void onResume(){isForeground=true;super.onResume();signIn.resume();continueSignIn();if(audioFocus!=null){try{audioFocus.requestAudioFocus(focusListener,AudioManager.STREAM_MUSIC,AudioManager.AUDIOFOCUS_GAIN);}catch(Exception ignored){}}}
+ @Override protected void onResume(){isForeground=true;super.onResume();signIn.resume();continueSignIn();if(audioFocus!=null){try{audioFocus.requestAudioFocus(focusListener,AudioManager.STREAM_MUSIC,AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);}catch(Exception ignored){}}}
  @Override protected void onPause(){isForeground=false;if(audioFocus!=null){try{audioFocus.abandonAudioFocus(focusListener);}catch(Exception ignored){}}signIn.pause();super.onPause();}
  private void continueSignIn(){
   if(isFinishing()||isDestroyed())return;
@@ -166,10 +166,12 @@ public class MainActivity extends Activity {
  private void openRenderer() {
   if(!WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) throw new IllegalStateException("Update Android System WebView to use this app");
   web=new WebView(this); web.setSaveEnabled(false);
-  // UI cues route through a media-stream sink in the renderer; request media
-  // audio focus so they pause with calls and route to Bluetooth like media.
+  // UI cues route through a media-stream sink in the renderer; take media
+  // audio focus so they pause with calls and route to Bluetooth like media —
+  // TRANSIENT_MAY_DUCK, not GAIN: GAIN is exclusive and indefinite, so opening
+  // the app alone paused every other app's playback until the app backgrounded.
   audioFocus=(AudioManager)getSystemService("audio");
-  try { audioFocus.requestAudioFocus(focusListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN); } catch (Exception ignored) {}
+  try { audioFocus.requestAudioFocus(focusListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK); } catch (Exception ignored) {}
   web.addJavascriptInterface(new AudioRouting(), "androidAudio");
   WebSettings settings=web.getSettings(); settings.setJavaScriptEnabled(true); settings.setDomStorageEnabled(true); settings.setAllowFileAccess(false); settings.setAllowContentAccess(false); settings.setMediaPlaybackRequiresUserGesture(false); settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
   WebView.setWebContentsDebuggingEnabled(false);

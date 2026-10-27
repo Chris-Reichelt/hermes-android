@@ -635,7 +635,15 @@ export function ChatBar({
   useEffect(() => {
     const editor = editorRef.current
 
-    if (!editor || !isAndroidShell()) {
+    // Attach on EVERY platform, gated only on the editor existing. The
+    // shell's `platform` stamp can land AFTER this effect first runs (late
+    // injection), and gating on it at mount time meant the delete listener
+    // never attached on the phone — every build since apk44 shipped a
+    // listener that wasn't there. The delete path is platform-safe: the
+    // strict delete is the same one the desktop keydown path runs, and the
+    // trailing fallback only fires when that delete fails with the caret
+    // at the composer's very end.
+    if (!editor) {
       return
     }
 

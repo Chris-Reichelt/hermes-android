@@ -602,6 +602,36 @@ export function ChatBar({
     }
   }
 
+  // React's onBeforeInput is a polyfill that does not observe the native
+  // `beforeinput` event (that is why cut never reaches the handler above) —
+  // so the Android IME delete path must ride a NATIVE listener on the editor
+  // itself. Gboard's backspace arrives as neither a `Backspace` keydown nor a
+  // React polyfill event; native beforeinput is the one hook every Chromium
+  // edit fires through, so this is what makes a pasted link chip deletable
+  // from the phone keyboard (Chris: apk42/apk43 could not delete it).
+  useEffect(() => {
+    const editor = editorRef.current
+
+    if (!editor || !isAndroidShell()) {
+      return
+    }
+
+    const onNativeBeforeInput = (event: InputEvent) => {
+      if (event.inputType !== 'deleteContentBackward' || event.isComposing || event.defaultPrevented) {
+        return
+      }
+
+      if (withUndoPoint(() => deleteChipBeforeCaret(editor))) {
+        event.preventDefault()
+        flushEditorToDraft(editor)
+      }
+    }
+
+    editor.addEventListener('beforeinput', onNativeBeforeInput)
+
+    return () => editor.removeEventListener('beforeinput', onNativeBeforeInput)
+  }, [])
+
   // Cut never reaches the handler above: React's onBeforeInput is a
   // keypress/textInput polyfill and does not observe the native
   // `beforeinput` event, so Chromium's deleteByCut input type is invisible to

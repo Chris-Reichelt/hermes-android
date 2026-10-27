@@ -1,0 +1,1 @@
+export{sc as default}from"./shiki-2UeYNWfM.js";

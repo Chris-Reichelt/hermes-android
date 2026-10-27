@@ -1,0 +1,1 @@
+export{vc as default}from"./shiki-2UeYNWfM.js";

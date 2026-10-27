@@ -185,6 +185,12 @@ public class MainActivity extends Activity {
    @Override public boolean shouldOverrideUrlLoading(WebView view,WebResourceRequest r) { return !r.getUrl().toString().startsWith(ORIGIN+"/"); }
   });
   web.setWebChromeClient(new WebChromeClient() {
+   @Override public boolean onJsAlert(WebView view,String message,String title,JsResult result){
+    // Debug breadcrumbs from the renderer land here as native toasts.
+    android.widget.Toast.makeText(view.getContext(),message,android.widget.Toast.LENGTH_SHORT).show();
+    result.confirm();
+    return true;
+   }
    @Override public void onPermissionRequest(PermissionRequest request) {
     if(!trustedOrigin(request.getOrigin()) || !Arrays.asList(request.getResources()).contains(PermissionRequest.RESOURCE_AUDIO_CAPTURE)) {request.deny();return;}
     microphoneRequest=request;

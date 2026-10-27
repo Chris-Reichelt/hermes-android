@@ -1,0 +1,1 @@
+export{Id as default}from"./shiki-2UeYNWfM.js";

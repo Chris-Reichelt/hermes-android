@@ -1,0 +1,1 @@
+export{ru as default}from"./shiki-2UeYNWfM.js";

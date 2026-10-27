@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.hermes.privateapp.DownloadFailureTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-01T18:08:44" hostname="ncc1701e" time="0.169">
+<testsuite name="com.hermes.privateapp.DownloadFailureTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-27T14:37:08" hostname="ncc1701e" time="0.191">
   <properties/>
-  <testcase name="missingStagedFileHasReadStage" classname="com.hermes.privateapp.DownloadFailureTest" time="0.005"/>
+  <testcase name="missingStagedFileHasReadStage" classname="com.hermes.privateapp.DownloadFailureTest" time="0.006"/>
   <testcase name="httpStatusIsBoundedAndStageSpecific" classname="com.hermes.privateapp.DownloadFailureTest" time="0.001"/>
-  <testcase name="errorsNeverExposeExceptionContent" classname="com.hermes.privateapp.DownloadFailureTest" time="0.001"/>
-  <testcase name="writeAndCloseErrorsAreDestinationCopyFailures" classname="com.hermes.privateapp.DownloadFailureTest" time="0.141"/>
+  <testcase name="errorsNeverExposeExceptionContent" classname="com.hermes.privateapp.DownloadFailureTest" time="0.0"/>
+  <testcase name="writeAndCloseErrorsAreDestinationCopyFailures" classname="com.hermes.privateapp.DownloadFailureTest" time="0.16"/>
   <testcase name="malformedPayloadsDoNotBecomeStrings" classname="com.hermes.privateapp.DownloadFailureTest" time="0.013"/>
-  <testcase name="optionalNullSessionIsAbsentAndLiteralPathIsUnchanged" classname="com.hermes.privateapp.DownloadFailureTest" time="0.001"/>
-  <testcase name="immediateRequestFailureDoesNotOpenDestination" classname="com.hermes.privateapp.DownloadFailureTest" time="0.0"/>
-  <testcase name="destinationNullAndPermissionFailuresAreDistinctFromRequest" classname="com.hermes.privateapp.DownloadFailureTest" time="0.002"/>
+  <testcase name="optionalNullSessionIsAbsentAndLiteralPathIsUnchanged" classname="com.hermes.privateapp.DownloadFailureTest" time="0.002"/>
+  <testcase name="immediateRequestFailureDoesNotOpenDestination" classname="com.hermes.privateapp.DownloadFailureTest" time="0.001"/>
+  <testcase name="destinationNullAndPermissionFailuresAreDistinctFromRequest" classname="com.hermes.privateapp.DownloadFailureTest" time="0.001"/>
   <testcase name="successfulSaveClosesAndCopiesExactly" classname="com.hermes.privateapp.DownloadFailureTest" time="0.002"/>
   <testcase name="changedSessionNeverOpensDestination" classname="com.hermes.privateapp.DownloadFailureTest" time="0.001"/>
   <testcase name="temporaryStorageFailureIsNotNetworkFailure" classname="com.hermes.privateapp.DownloadFailureTest" time="0.001"/>

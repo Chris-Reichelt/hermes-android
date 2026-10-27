@@ -1,0 +1,1 @@
+export{G as default,G as getWasmInstance,K as wasmBinary}from"./shiki-2UeYNWfM.js";

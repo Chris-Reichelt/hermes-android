@@ -1,0 +1,1 @@
+import{u as e}from"./vendor-md-hFMPhfbT.js";import{t}from"./bundle-mjs-Dy7YIEMN.js";function n(...n){return t(e(n))}export{n as t};

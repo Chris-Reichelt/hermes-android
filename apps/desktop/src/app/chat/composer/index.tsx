@@ -90,6 +90,7 @@ import {
   beginComposerComposition,
   composerPlainText,
   deleteChipBeforeCaret,
+  deleteTrailingChipAtEnd,
   deleteSelectionInEditor,
   insertComposerContentsAtCaret,
   normalizeComposerEditorDom,
@@ -585,6 +586,7 @@ export function ChatBar({
         // before placing the caret.
         normalizeComposerEditorDom(editor)
         placeCaretEnd(editor)
+        alert('repaint:chip')
       }
     }
 
@@ -647,6 +649,18 @@ export function ChatBar({
       normalizeComposerEditorDom(editor)
 
       if (withUndoPoint(() => deleteChipBeforeCaret(editor))) {
+        alert('del:adjacent')
+        event.preventDefault()
+        flushEditorToDraft(editor)
+
+        return
+      }
+
+      // The caret's neighbour is something the strict delete won't reach
+      // across. On a phone, backspace at the end of a composer holding a
+      // chip means "delete the chip" — take the chip regardless.
+      if (withUndoPoint(() => deleteTrailingChipAtEnd(editor))) {
+        alert('del:trailing')
         event.preventDefault()
         flushEditorToDraft(editor)
       }
@@ -718,6 +732,7 @@ export function ChatBar({
     // landed text on the SAME input event, so the chip still appears
     // instantly — and the IME never holds a buffer it has to re-insert.
     if (imageBlobs.length === 0 && isAndroidShell()) {
+      alert('paste:native')
       return
     }
 

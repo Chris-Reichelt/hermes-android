@@ -1,0 +1,1 @@
+export{ya as default}from"./shiki-2UeYNWfM.js";

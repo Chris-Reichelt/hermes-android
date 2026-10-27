@@ -1,0 +1,1 @@
+export{Ka as default}from"./shiki-2UeYNWfM.js";

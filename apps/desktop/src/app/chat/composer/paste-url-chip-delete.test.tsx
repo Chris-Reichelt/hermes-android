@@ -9,7 +9,7 @@ import { I18nProvider } from '@/i18n'
 import { mainComposerScope } from '@/store/composer'
 
 import { ChatBar } from './index'
-import { RICH_INPUT_SLOT } from './rich-editor'
+import { placeCaretEnd, RICH_INPUT_SLOT } from './rich-editor'
 import type { ChatBarState } from './types'
 
 afterEach(cleanup)
@@ -115,6 +115,41 @@ describe('phone: pasted link chips, then the keyboard deletes the chip', () => {
     // character, not nothing.
     expect(editor.querySelector('[data-ref-kind="url"]')).toBeNull()
     expect(editor.textContent ?? '').not.toContain('https://')
+    expect(backspace.defaultPrevented).toBe(true)
+  })
+
+  it('the trailing fallback deletes the chip even when scaffolding sits between caret and chip', () => {
+    const { container } = render(<Harness />)
+
+    const editor = container.querySelector<HTMLElement>(`[data-slot="${RICH_INPUT_SLOT}"]`)!
+
+    Object.defineProperty(editor, 'isContentEditable', { configurable: true, value: true })
+    editor.focus()
+
+    editor.textContent = URL
+
+    act(() => {
+      fireEvent.input(editor)
+    })
+
+    expect(editor.querySelector('[data-ref-kind="url"]')).not.toBeNull()
+
+    // Chromium leaves a trailing break after the repaint and the caret ends
+    // up past it — the adjacency-strict delete sees the break, not the chip.
+    editor.appendChild(document.createElement('br'))
+    placeCaretEnd(editor)
+
+    const backspace = new InputEvent('beforeinput', {
+      bubbles: true,
+      cancelable: true,
+      inputType: 'deleteContentBackward'
+    })
+
+    act(() => {
+      editor.dispatchEvent(backspace)
+    })
+
+    expect(editor.querySelector('[data-ref-kind="url"]')).toBeNull()
     expect(backspace.defaultPrevented).toBe(true)
   })
 })

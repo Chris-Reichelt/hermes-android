@@ -1,8 +1,8 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.hermes.privateapp.publicpreview"
-4    android:versionCode="22"
-5    android:versionName="0.3.11-public-preview" >
+4    android:versionCode="47"
+5    android:versionName="0.3.35-apk47-public-preview" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="26"

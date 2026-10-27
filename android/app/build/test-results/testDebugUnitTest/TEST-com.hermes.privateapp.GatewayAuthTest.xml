@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.hermes.privateapp.GatewayAuthTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-01T18:08:44" hostname="ncc1701e" time="0.319">
+<testsuite name="com.hermes.privateapp.GatewayAuthTest" tests="6" skipped="6" failures="0" errors="0" timestamp="2026-10-27T14:37:08" hostname="ncc1701e" time="0.004">
   <properties/>
-  <testcase name="serverRejectsCustomSchemeBadPkceAndCodeReplay" classname="com.hermes.privateapp.GatewayAuthTest" time="0.086"/>
-  <testcase name="passwordFailureAndLegacyRejected" classname="com.hermes.privateapp.GatewayAuthTest" time="0.036"/>
-  <testcase name="refreshFailureRedactedAndCrossEndpointBlocked" classname="com.hermes.privateapp.GatewayAuthTest" time="0.048"/>
-  <testcase name="nativeLoginBearerRefreshAndSingleUseSockets" classname="com.hermes.privateapp.GatewayAuthTest" time="0.061"/>
-  <testcase name="rejectsWrongStateThenAcceptsCorrectCallback" classname="com.hermes.privateapp.GatewayAuthTest" time="0.042"/>
-  <testcase name="authenticatedArtifactDownloadRefreshesAndKeepsScope" classname="com.hermes.privateapp.GatewayAuthTest" time="0.045"/>
+  <testcase name="serverRejectsCustomSchemeBadPkceAndCodeReplay" classname="com.hermes.privateapp.GatewayAuthTest" time="0.003">
+    <skipped/>
+  </testcase>
+  <testcase name="passwordFailureAndLegacyRejected" classname="com.hermes.privateapp.GatewayAuthTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="refreshFailureRedactedAndCrossEndpointBlocked" classname="com.hermes.privateapp.GatewayAuthTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="nativeLoginBearerRefreshAndSingleUseSockets" classname="com.hermes.privateapp.GatewayAuthTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="rejectsWrongStateThenAcceptsCorrectCallback" classname="com.hermes.privateapp.GatewayAuthTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="authenticatedArtifactDownloadRefreshesAndKeepsScope" classname="com.hermes.privateapp.GatewayAuthTest" time="0.0">
+    <skipped/>
+  </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

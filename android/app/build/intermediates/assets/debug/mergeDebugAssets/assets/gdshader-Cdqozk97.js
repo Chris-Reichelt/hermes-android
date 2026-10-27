@@ -1,0 +1,1 @@
+export{Wi as default}from"./shiki-2UeYNWfM.js";

@@ -519,6 +519,66 @@ export function deleteChipBeforeCaret(editor: HTMLElement): boolean {
   return true
 }
 
+/** Phone backspace fallback. When the caret sits at the very END of the
+ *  composer and the last meaningful node is a reference chip — but the
+ *  caret's immediate neighbour is scaffolding the adjacency-strict delete
+ *  refuses to reach across (a stray break, an empty node) — delete the chip
+ *  anyway, together with everything trailing it (its auto-inserted space,
+ *  any un-folded paste residue, scaffolding). On a phone, backspace at the
+ *  end of a composer holding a chip means "delete the chip"; node
+ *  archaeology shouldn't be the user's problem. Real typed text after the
+ *  chip makes the last meaningful node a text node, so typing stays native. */
+export function deleteTrailingChipAtEnd(editor: HTMLElement): boolean {
+  const hit = composerSelectionRange(editor)
+
+  if (!hit || !hit.range.collapsed) {
+    return false
+  }
+
+  const end = document.createRange()
+
+  end.selectNodeContents(editor)
+  end.collapse(false)
+
+  // Caret at the end: either the editor position itself, or the very end of
+  // the last text node (the two spellings Chromium uses interchangeably).
+  const lastChild = editor.lastChild
+  const atEditorEnd = hit.range.startContainer === editor && hit.range.startOffset === editor.childNodes.length
+  const atLastTextEnd = lastChild?.nodeType === Node.TEXT_NODE && hit.range.startContainer === lastChild && hit.range.startOffset === (lastChild as Text).length
+
+  if (!atEditorEnd && !atLastTextEnd) {
+    return false
+  }
+
+  let node: ChildNode | null = editor.lastChild
+
+  while (node && (isEmptyTextNode(node) || node.nodeName === 'BR')) {
+    node = node.previousSibling
+  }
+
+  if (node?.nodeType !== Node.ELEMENT_NODE || !(node as HTMLElement).dataset.refText) {
+    return false
+  }
+
+  const chip = node as HTMLElement
+
+  while (chip.nextSibling) {
+    chip.nextSibling.remove()
+  }
+
+  chip.remove()
+
+  const caret = document.createRange()
+
+  caret.selectNodeContents(editor)
+  caret.collapse(false)
+  caret.collapse(true)
+  hit.selection.removeAllRanges()
+  hit.selection.addRange(caret)
+
+  return true
+}
+
 /** Remove a non-collapsed selection in-editor. Skips collapsed carets so word/
  *  line delete (Opt/Cmd+Backspace) stays native. Returns whether anything ran. */
 export function deleteSelectionInEditor(editor: HTMLElement) {

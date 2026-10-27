@@ -1,0 +1,1 @@
+export{Gn as default}from"./shiki-2UeYNWfM.js";

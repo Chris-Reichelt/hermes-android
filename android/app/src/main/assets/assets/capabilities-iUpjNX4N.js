@@ -1,1 +1,0 @@
-import{t as e}from"./capabilities-BqwoVq7I.js";export{e as CapabilitiesView};

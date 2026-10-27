@@ -1,0 +1,1 @@
+export{Xc as default}from"./shiki-2UeYNWfM.js";

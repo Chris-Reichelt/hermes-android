@@ -1,0 +1,1 @@
+export{Nc as default}from"./shiki-2UeYNWfM.js";

@@ -585,6 +585,21 @@ export function ChatBar({
     }
 
     recordUndoPoint({ coalesce: inputType === 'insertText' || inputType === 'deleteContentBackward' })
+
+    // Android IMEs backspace through here, not as a `Backspace` keydown:
+    // Gboard delivers key='Process'/undefined, so the keydown chip-delete
+    // above never runs on a phone and a pasted link chip becomes undeletable
+    // (Chris's apk42 report). `beforeinput` is the hook every Chromium edit —
+    // hardware, IME, long-press — must pass through, so delete the chip
+    // atomically here too: same unit (chip + its trailing space), same undo.
+    if (inputType === 'deleteContentBackward' && !event.nativeEvent.isComposing) {
+      const editor = event.currentTarget
+
+      if (withUndoPoint(() => deleteChipBeforeCaret(editor))) {
+        event.preventDefault()
+        flushEditorToDraft(editor)
+      }
+    }
   }
 
   // Cut never reaches the handler above: React's onBeforeInput is a

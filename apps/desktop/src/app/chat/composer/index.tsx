@@ -563,6 +563,12 @@ export function ChatBar({
 
       if (linkified !== text) {
         renderComposerContents(editor, linkified)
+        // Chromium likes to leave phantom scaffolding (empty text nodes, a
+        // trailing break) after a programmatic repaint — and the chip delete
+        // reads the node IMMEDIATELY before the caret, so scaffolding between
+        // the caret and the chip makes a pasted link undeletable. Clean it
+        // before placing the caret.
+        normalizeComposerEditorDom(editor)
         placeCaretEnd(editor)
       }
     }
@@ -620,6 +626,10 @@ export function ChatBar({
       if (event.inputType !== 'deleteContentBackward' || event.isComposing || event.defaultPrevented) {
         return
       }
+
+      // Same reason as above: the delete check is adjacency-strict, so sweep
+      // Chromium's phantom scaffolding out of the caret's way first.
+      normalizeComposerEditorDom(editor)
 
       if (withUndoPoint(() => deleteChipBeforeCaret(editor))) {
         event.preventDefault()

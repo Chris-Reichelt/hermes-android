@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
  /** Ringer state for the renderer's UI cues: 0 silent, 1 vibrate, 2 normal. */
  private final class AudioRouting {
   @android.webkit.JavascriptInterface public int ringerMode() {
-   try { return ((AudioManager)getSystemService("audio")).getRingerMode(); } catch (Exception e) { return 2; }
+   try { return ((AudioManager)getSystemService(Context.AUDIO_SERVICE)).getRingerMode(); } catch (Exception e) { return 2; }
   }
  }
  private TextView setupStatus;
@@ -170,7 +170,7 @@ public class MainActivity extends Activity {
   // audio focus so they pause with calls and route to Bluetooth like media —
   // TRANSIENT_MAY_DUCK, not GAIN: GAIN is exclusive and indefinite, so opening
   // the app alone paused every other app's playback until the app backgrounded.
-  audioFocus=(AudioManager)getSystemService("audio");
+  audioFocus=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   try { audioFocus.requestAudioFocus(focusListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK); } catch (Exception ignored) {}
   web.addJavascriptInterface(new AudioRouting(), "androidAudio");
   WebSettings settings=web.getSettings(); settings.setJavaScriptEnabled(true); settings.setDomStorageEnabled(true); settings.setAllowFileAccess(false); settings.setAllowContentAccess(false); settings.setMediaPlaybackRequiresUserGesture(false); settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);

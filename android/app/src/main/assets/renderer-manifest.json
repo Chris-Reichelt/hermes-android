@@ -7203,8 +7203,8 @@
       "_utils-BUZD65dy.js"
     ]
   },
-  "_capabilities-CVdZxQxc.js": {
-    "file": "assets/capabilities-CVdZxQxc.js",
+  "_capabilities-D2X6_kHv.js": {
+    "file": "assets/capabilities-D2X6_kHv.js",
     "name": "capabilities",
     "imports": [
       "_rolldown-runtime-C_s2cVnS.js",
@@ -7286,7 +7286,7 @@
       "_session-owner-resolution-BIAZoEfz.js",
       "_open-session-DW3Q60kI.js",
       "_skeleton-Cw_QcNOA.js",
-      "_shiki-highlighter-iGXjkBQ7.js",
+      "_shiki-highlighter-D-mZ97bW.js",
       "_directive-text-DBXey86L.js",
       "_confirm-dialog-Ds6p53aV.js",
       "_projects-_pu1MMSm.js",
@@ -7669,14 +7669,14 @@
       "_combo-DgB_1z2X.js"
     ]
   },
-  "_diff-lines-Y2vE-TVQ.js": {
-    "file": "assets/diff-lines-Y2vE-TVQ.js",
+  "_diff-lines-qeVhdyQ8.js": {
+    "file": "assets/diff-lines-qeVhdyQ8.js",
     "name": "diff-lines",
     "imports": [
       "_rolldown-runtime-C_s2cVnS.js",
       "_vendor-react-CUriUufu.js",
       "_utils-BUZD65dy.js",
-      "_shiki-highlighter-iGXjkBQ7.js",
+      "_shiki-highlighter-D-mZ97bW.js",
       "_markdown-code-CXApgGEW.js",
       "_error-boundary-BkK1nWVd.js",
       "_shiki-plain-6YLXaSgV.js"
@@ -8370,14 +8370,14 @@
     "file": "assets/profile-color-TXT65diY.js",
     "name": "profile-color"
   },
-  "_profile-ops-Z529m82R.js": {
-    "file": "assets/profile-ops-Z529m82R.js",
+  "_profile-ops-Bu6_lm2X.js": {
+    "file": "assets/profile-ops-Bu6_lm2X.js",
     "name": "profile-ops",
     "imports": [
       "_vendor-react-CUriUufu.js",
       "_actions-CNO5R9mx.js",
       "_connection-registry-state-C4MY4T6q.js",
-      "_capabilities-CVdZxQxc.js",
+      "_capabilities-D2X6_kHv.js",
       "_session-states-DUuZIKPd.js",
       "_profile-BGYPsSjG.js"
     ],
@@ -9196,8 +9196,8 @@
       "../../../.hermes/hermes-agent/node_modules/shiki/dist/wasm.mjs"
     ]
   },
-  "_shiki-highlighter-iGXjkBQ7.js": {
-    "file": "assets/shiki-highlighter-iGXjkBQ7.js",
+  "_shiki-highlighter-D-mZ97bW.js": {
+    "file": "assets/shiki-highlighter-D-mZ97bW.js",
     "name": "shiki-highlighter",
     "imports": [
       "_rolldown-runtime-C_s2cVnS.js",
@@ -9560,7 +9560,7 @@
     ]
   },
   "index.html": {
-    "file": "assets/index-DQgyKch8.js",
+    "file": "assets/index-BGv9FPNS.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -9615,12 +9615,12 @@
     ]
   },
   "src/app/capabilities/index.tsx": {
-    "file": "assets/capabilities-Cx1du_ve.js",
+    "file": "assets/capabilities-Bijwx_AF.js",
     "name": "capabilities",
     "src": "src/app/capabilities/index.tsx",
     "isDynamicEntry": true,
     "imports": [
-      "_capabilities-CVdZxQxc.js"
+      "_capabilities-D2X6_kHv.js"
     ]
   },
   "src/app/chat/right-rail/preview-act.ts": {
@@ -10112,7 +10112,7 @@
     ]
   },
   "src/components/chat/syntax-diff.tsx": {
-    "file": "assets/syntax-diff-DuQnA9-M.js",
+    "file": "assets/syntax-diff-t0KepyJx.js",
     "name": "syntax-diff",
     "src": "src/components/chat/syntax-diff.tsx",
     "isDynamicEntry": true,
@@ -10120,9 +10120,9 @@
       "_rolldown-runtime-C_s2cVnS.js",
       "_vendor-react-CUriUufu.js",
       "_shiki-2UeYNWfM.js",
-      "_shiki-highlighter-iGXjkBQ7.js",
+      "_shiki-highlighter-D-mZ97bW.js",
       "_shiki-plain-6YLXaSgV.js",
-      "_diff-lines-Y2vE-TVQ.js"
+      "_diff-lines-qeVhdyQ8.js"
     ]
   },
   "src/fonts/JetBrainsMono-Bold.woff2": {
@@ -10151,7 +10151,7 @@
     ]
   },
   "src/main.tsx": {
-    "file": "assets/main-B3hFaXHV.js",
+    "file": "assets/main-CfTEKGQm.js",
     "name": "main",
     "src": "src/main.tsx",
     "isDynamicEntry": true,
@@ -10180,7 +10180,7 @@
       "_plugin-packages-aa8THvKN.js",
       "_IconAlertCircle-YI2gzjwb.js",
       "_IconAlertTriangle-Bv2C_aF4.js",
-      "_capabilities-CVdZxQxc.js",
+      "_capabilities-D2X6_kHv.js",
       "_external-link-BLHOrFt5.js",
       "_segmented-control-DgP-wyir.js",
       "_IconCheck-GpqD8de2.js",
@@ -10235,7 +10235,7 @@
       "_session-owner-resolution-BIAZoEfz.js",
       "_open-session-DW3Q60kI.js",
       "_skeleton-Cw_QcNOA.js",
-      "_shiki-highlighter-iGXjkBQ7.js",
+      "_shiki-highlighter-D-mZ97bW.js",
       "_directive-text-DBXey86L.js",
       "_chat-runtime-BC7ys0sk.js",
       "_confirm-dialog-Ds6p53aV.js",
@@ -10275,9 +10275,9 @@
       "_store-CaagjMmz.js",
       "_use-theme-epoch-B66Dmh07.js",
       "_context-menu-handle-BdAReS_7.js",
-      "_diff-lines-Y2vE-TVQ.js",
+      "_diff-lines-qeVhdyQ8.js",
       "_pane-focus-CsFwwZUn.js",
-      "_profile-ops-Z529m82R.js"
+      "_profile-ops-Bu6_lm2X.js"
     ],
     "dynamicImports": [
       "../../../.hermes/hermes-agent/node_modules/@novnc/novnc/core/rfb.js",
@@ -10370,12 +10370,12 @@
     ]
   },
   "src/plugins/hermes-bots/profile-ops.ts": {
-    "file": "assets/profile-ops-DM6q3_yO.js",
+    "file": "assets/profile-ops-km1PEMJQ.js",
     "name": "profile-ops",
     "src": "src/plugins/hermes-bots/profile-ops.ts",
     "isDynamicEntry": true,
     "imports": [
-      "_profile-ops-Z529m82R.js"
+      "_profile-ops-Bu6_lm2X.js"
     ]
   },
   "src/store/connection-registry-state.ts": {

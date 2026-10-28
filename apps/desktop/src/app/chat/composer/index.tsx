@@ -94,8 +94,6 @@ import {
   deleteSelectionInEditor,
   insertComposerContentsAtCaret,
   normalizeComposerEditorDom,
-  placeCaretEnd,
-  renderComposerContents,
   RICH_INPUT_SLOT
 } from './rich-editor'
 import { useComposerScope, useComposerSurfaceId } from './scope'
@@ -116,21 +114,6 @@ import {
   selectionLinkLabel
 } from './url-refs'
 import { VoiceActivity, VoicePlaybackActivity } from './voice-activity'
-
-// The IME commits the tail of a pasted URL AFTER the input-time repaint has
-// already chipped its head (Chris's apk45 screenshot: chip ending at
-// `noPtRedirect=` with a stray highlighted `1` after it). The residue sits
-// between the caret and the chip — exactly where the adjacency-strict delete
-// refuses to reach across — and the chip's URL lost the tail it is holding.
-// Fold the glued residue back into the directive's value: the reference
-// regains the full URL and the caret faces the chip directly. Only residue
-// glued to the closing backtick matches — text typed after the chip lands
-// behind its auto-inserted space, so it never reads as residue.
-const URL_RESIDUE_RE = /@url:`([^`]+)`([^\s`]{1,40})(?=\s|$)/g
-
-function foldUrlResidue(text: string) {
-  return text.replace(URL_RESIDUE_RE, (_match, url: string, residue: string) => `@url:\`${url + residue}\``)
-}
 
 export function ChatBar({
   busy,
@@ -279,7 +262,6 @@ export function ChatBar({
   // engine writes it — an explicit shared handle, not a back-reference.
   const queueEditRef = useRef<QueueEditState | null>(null)
   const composingRef = useRef(false) // true during IME composition (CJK input)
-  const chipFreshUntilRef = useRef(0) // ms timestamp: a chip was just chipped from a paste, so glued text after it is URL tail residue, not typed text
   // The blur-close timer must not outlive the composer: an unmounted editor's
   // deferred closeTrigger() would setState after teardown (vitest reported it as
   // an unhandled "window is not defined" from paste-url-is-text.test.tsx).
@@ -570,34 +552,10 @@ export function ChatBar({
 
     const editor = event.currentTarget
 
-    // The Android paste path inserts natively (see handlePaste); the raw URL
-    // lands as text, so rewrite it into `@url:` directives and repaint the
-    // chips on the same input event — the paste reads as a chip immediately,
-    // with no space-then-backspace ritual and no stale IME buffer behind it.
-    if (isAndroidShell()) {
-      // Fold the paste tail back into the chip ONLY while the chip is fresh
-      // (just chipped from this paste): the IME commits the tail within
-      // milliseconds of the repaint, while text Chris types seconds later
-      // must stay text — a time-gated fold stopped apk48 from swallowing
-      // typed words into the URL reference (`…noPtRedirect=1nope`).
-      const fresh = Date.now() < chipFreshUntilRef.current
-      const plain = composerPlainText(editor)
-      const linkified = fresh ? foldUrlResidue(linkifyUrls(plain)) : linkifyUrls(plain)
-
-      if (linkified !== plain) {
-        renderComposerContents(editor, linkified)
-        // Chromium likes to leave phantom scaffolding (empty text nodes, a
-        // trailing break) after a programmatic repaint — and the chip delete
-        // reads the node IMMEDIATELY before the caret, so scaffolding between
-        // the caret and the chip makes a pasted link undeletable. Clean it
-        // before placing the caret.
-        normalizeComposerEditorDom(editor)
-        placeCaretEnd(editor)
-        chipFreshUntilRef.current = Date.now() + 1500
-        alert('repaint:chip')
-      }
-    }
-
+    // Android owns text paste and IME edits. Never replace its live text with
+    // contenteditable=false URL chips: repainting during input invalidates the
+    // IME's text/selection buffer and makes subsequent deletes replay stale text.
+    // Keep URLs as ordinary editable text through paste, typing and draft sync.
     scheduleFlushEditorToDraft(editor)
   }
 
@@ -677,7 +635,6 @@ export function ChatBar({
         : withUndoPoint(() => deleteChipBeforeCaret(editor))
 
       if (deleted) {
-        alert('del:adjacent')
         event.preventDefault()
         flushEditorToDraft(editor)
 
@@ -697,7 +654,6 @@ export function ChatBar({
       // across. On a phone, backspace at the end of a composer holding a
       // chip means "delete the chip" — take the chip regardless.
       if (withUndoPoint(() => deleteTrailingChipAtEnd(editor, composing))) {
-        alert('del:trailing')
         event.preventDefault()
         flushEditorToDraft(editor)
 
@@ -765,16 +721,10 @@ export function ChatBar({
       return
     }
 
-    // Android WebView: never preventDefault a text paste. WebView keeps the
-    // pasted text in the IME's composition buffer even after a programmatic
-    // insert replaces it, and every later keystroke then re-appends the tail
-    // of the URL at the caret — Chris's apk41 repro: backspacing a pasted
-    // Amazon order link emitted "packagepackageppackapackage…" forever. Let
-    // Chromium insert natively; handleEditorInput linkifies and chips the
-    // landed text on the SAME input event, so the chip still appears
-    // instantly — and the IME never holds a buffer it has to re-insert.
+    // Preserve WebView's native text insertion and selection replacement. The
+    // input handler only syncs the draft; it must not repaint URL chips over
+    // the IME's live buffer. Desktop retains its rich-paste behavior below.
     if (imageBlobs.length === 0 && isAndroidShell()) {
-      alert('paste:native')
       return
     }
 
@@ -926,7 +876,7 @@ export function ChatBar({
 
     // A typed link finished with a space chips like a pasted one — the space
     // itself rides along inside the insert.
-    if (withUndoPoint(() => chipTypedUrlOnSpace(event))) {
+    if (!isAndroidShell() && withUndoPoint(() => chipTypedUrlOnSpace(event))) {
       event.preventDefault()
       flushEditorToDraft(event.currentTarget)
 

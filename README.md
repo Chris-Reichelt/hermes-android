@@ -6,7 +6,9 @@ Added the missing native `MODIFY_AUDIO_SETTINGS` permission required by Chromium
 
 **Phone recovery is not verified.** Android emulator upgraded successfully and its installed APK hash matches, but both old and updated WebView capture probes were blocked by renderer crashes. A separate Linux Chromium synthetic-input control passed five record/decode/playback/reacquire cycles and cancel/restart; this is not Android capture evidence. Regression results: **46 Vitest, 12 JUnit**, phone-layout fixtures, isolated real auth integration, renderer build/typecheck, Gradle/signature/lint passed (lint warnings retained).
 
-Install `/home/will/hermes-android/artifacts/hermes-android-0.3.1-debug.apk` over the existing app. The current `artifacts/hermes-android-debug.apk` alias is identical. Package `com.hermes.privateapp`, versionCode **4**, versionName **0.3.1**, same signing certificate. SHA256: `6c045f66bb3d171836ca953b19a7fdbb75b5e61cab9e4a083af2f033cfccf80b`.
+**Current download: [v0.3.38-apk50 public preview](https://github.com/Chris-Reichelt/hermes-android/releases/download/v0.3.38-apk50/hermes-android-0.3.38-apk50-public-preview.apk)** — Android pasted-link editing fix (pasted URLs stay editable; backspace/deletion work normally; paste/delete confirmed by the reporting user). Package `com.hermes.privateapp.publicpreview`, versionCode **50**, versionName **0.3.38-apk50-public-preview**, same signing certificate as apk49 (upgrade-in-place). SHA256: `929b020504ec1e987136a6a94be4bbaae516e92fb776ff7b35c79da5df9f7922`.
+
+Historical: `artifacts/hermes-android-0.3.1-debug.apk` (private package `com.hermes.privateapp`, versionCode **4**) and the `artifacts/hermes-android-debug.apk` alias predate the public-preview line and are not the current download.
 
 Full acquisition-path diagnosis, evidence and remaining phone checks: **MICROPHONE-0.3.1.md**. Machine-readable evidence: `artifacts/microphone-validation.json`. Everything below describes retained functionality or historical v0.3.0 validation, not a claim of successful v0.3.1 phone capture.
 
